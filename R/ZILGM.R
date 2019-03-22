@@ -136,7 +136,7 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
     weights_mat = matrix(1, n, p)
   }
   
-  if (any(weights_mat) < 0) {"The elements in weights_mat must have non-negative values"}
+  if (any(weights_mat < 0)) {"The elements in weights_mat must have non-negative values"}
   if ((NROW(weights_mat) != n) | (NCOL(weights_mat) != p)) {"The number of elements in weights_mat not equal to the number of rows and columns on X"}
   
   coef_tmp = mclapply(1:p, FUN = function(j) {zigm_wrapper(jth = j, X = X, lambda = lambda, family = family, update_type = update_type,
