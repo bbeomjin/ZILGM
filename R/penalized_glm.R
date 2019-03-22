@@ -1,4 +1,9 @@
-dyn.load("~/beomfile/ZINBGM(Ccode)/outloop.so")
+
+.onLoad = function(lib, pkg)
+{
+  library.dynam("ZILGM", pkg, lib)
+}
+
 penalized_glm = function(x, y, weights, start=NULL, etastart=NULL, mustart=NULL, nlambda=100, lambda=NULL, lambda.min.ratio=ifelse(nobs<nvars,.05, .001),
                          alpha=1, gamma=3, rescale=TRUE, standardize=TRUE, penalty.factor = rep(1, nvars),thresh=1e-6, eps.bino=1e-5, maxit=1000, eps=.Machine$double.eps, theta, 
                          family=c("gaussian", "binomial", "poisson", "negbin"), penalty=c("enet","mnet","snet"), convex=FALSE, x.keep=FALSE, y.keep=TRUE, trace=FALSE)
@@ -95,7 +100,8 @@ penalized_glm = function(x, y, weights, start=NULL, etastart=NULL, mustart=NULL,
                   family=as.integer(famtype),
                   theta=as.double(theta),
                   w = as.double(0),
-                  ep = as.double(eps.bino))$w
+                  ep = as.double(eps.bino),
+                  PACKAGE = "ZILGM")$w
     z <- .Fortran("zeval",
                   n=as.integer(n),
                   y=as.double(y),
@@ -104,7 +110,7 @@ penalized_glm = function(x, y, weights, start=NULL, etastart=NULL, mustart=NULL,
                   w=as.double(rep(w,n)),
                   family=as.integer(famtype),
                   z=as.double(rep(0,n)),
-                  PACKAGE="mpath")$z
+                  PACKAGE = "ZILGM")$z
     lmax <- findlam(x=x, y=y, weights=weights, family=family, theta=theta, mu=mu, w=w, z=z, alpha=alpha, penalty.factor=penalty.factor, standardize=standardize) 
     #    if(penalty %in% c("mnet", "snet") && !rescale) lmax <- 0.5 * sqrt(lmax)
     lpath <- seq(log(lmax), log(lambda.min.ratio * lmax), length.out=nlambda)
@@ -121,7 +127,8 @@ penalized_glm = function(x, y, weights, start=NULL, etastart=NULL, mustart=NULL,
                       theta=as.double(theta),
                       weights=as.double(weights),
                       family=as.integer(famtype),
-                      dev=as.double(0))$dev
+                      dev=as.double(0),
+                      PACKAGE = "ZILGM")$dev
   beta <- matrix(0, ncol=nlambda, nrow=m)
   if(is.null(start))
     startv <- 0
@@ -193,7 +200,8 @@ penalized_glm = function(x, y, weights, start=NULL, etastart=NULL, mustart=NULL,
                   satu=as.integer(0),
                   good=as.integer(nlambda),
                   ep = as.double(eps.bino),
-                  outpll = as.double(matrix(0, maxit, nlambda))) 
+                  outpll = as.double(matrix(0, maxit, nlambda)),
+                  PACKAGE = "ZILGM") 
   if(nlambda > 1 || tmp$satu==0)
     good <- 1:tmp$good # only those non-saturated models
   else if(tmp$satu==1)
@@ -243,7 +251,8 @@ penalized_glm = function(x, y, weights, start=NULL, etastart=NULL, mustart=NULL,
                           alpha=as.double(alpha),
                           gam=as.double(gamma),
                           penalty=as.integer(pentype),
-                          pen=as.double(0.0))$pen
+                          pen=as.double(0.0),
+                          PACKAGE = "ZILGM")$pen
   }
   RET$penval <- penval
   if(standardize) {
@@ -306,7 +315,8 @@ findlam <- function(x, y, weights, family, theta=NULL,mu, w, z, alpha, penalty.f
                   family = as.integer(4),
                   theta = as.double(fit$theta),
                   w = as.double(rep(0, length(y))),
-                  ep = as.double(eps.bino))$w
+                  ep = as.double(eps.bino),
+                  PACKAGE = "ZILGM")$w
     resid <- .Fortran("zeval",
                       n = as.integer(length(y)),
                       y = as.double(y),
@@ -314,7 +324,8 @@ findlam <- function(x, y, weights, family, theta=NULL,mu, w, z, alpha, penalty.f
                       mu = as.double(mu),
                       w = as.double(w),
                       family = as.integer(4),
-                      z = as.double(rep(0, length(y))))$z
+                      z = as.double(rep(0, length(y))),
+                      PACKAGE = "ZILGM")$z
   }
   else{
     if(length(acvar) < length(penalty.factor))
@@ -361,7 +372,8 @@ deviance.glmreg <- function(object, newx, y, weights, na.action=na.pass, ...){
                        theta=as.double(object$theta[j]),
                        weights=as.double(weights),
                        family= as.integer(famtype),
-                       dev=as.double(0))$dev
+                       dev=as.double(0),
+                       PACKAGE = "ZILGM")$dev
   return(dev)
 }
 
