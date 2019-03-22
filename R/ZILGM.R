@@ -122,7 +122,7 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
 {
   family = match.arg(family)
   update_type = match.arg(update_type)
-  edge_type = match.arg(edge_type)
+  sym = match.arg(sym)
   
   coord_fun = switch(family,
                      Poisson = zilgm_poisson,
