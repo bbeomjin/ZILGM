@@ -170,7 +170,7 @@ pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL,
     eta = negbin_fit$eta
     mu = negbin_fit$mu
   } else {
-    bvec = drop(negbin_fit$coefficients)
+    bvec = drop(c(negbin_fit$b0, negbin_fit$beta))
     mu = negbin_fit$fitted.values
     eta = log(mu)
   }

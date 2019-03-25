@@ -169,7 +169,7 @@ pglm_p_irls = function(y, x, weights, bvec0 = NULL, eta0 = NULL, mu0 = NULL,
     eta = poisson_fit$eta
     mu = poisson_fit$mu
   } else {
-    bvec = drop(poisson_fit$coefficients)
+    bvec = drop(c(poisson_fit$b0, poisson_fit$beta))
     mu = poisson_fit$fitted.values
     eta = log(mu)
   }
