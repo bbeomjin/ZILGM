@@ -21,7 +21,7 @@ dNBII = function(y, mu, sigma, log = FALSE)
 }
 
 
-Adjacency = function (mat)
+Adjacency = function(mat)
 {
   # absolute matrix
   diag(mat) = 0
@@ -30,14 +30,14 @@ Adjacency = function (mat)
   return(mat)
 }
 
-find_lammax = function (X)
+find_lammax = function(X)
 {
   tmp = t(X) %*% X
   lammax = 1/nrow(X) * max(abs(tmp[upper.tri(tmp)]))
   return(lammax)
 }
 
-cal_ebic_inflation = function (results, X, gamval = 1)
+cal_ebic_inflation = function(results, X, gamval = 1)
 {
   p = ncol(X) # p by length of lambda
   n = nrow(X)  # n by length of lambda

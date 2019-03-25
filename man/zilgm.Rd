@@ -15,52 +15,52 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{
-  Matrix
-}
+  A $n \times p$ data matrix, where $n$ is the number of observations and $p$ is the number of variables or nodes.
+  }
   \item{lambda}{
-  tuning parameter
+  A sequence of regularization parameter to control a level of $l_1$-penalty.
   }
   \item{nlambda}{
-  The number of lambda
+  The number of regularization parameter.
   }
   \item{family}{
-  family
+  Types of node-conditional distribution to be assumed among zero-inflated distributions.
   }
   \item{update_type}{
-  Algorithm for estimating coefficients
+  Algorithm for estimating edge coefficients.
   }
   \item{sym}{
-  estimated matrix 
+  Symmetrize the output graphs. If sym = "AND", the edge between node $i$ and node $j$ is selected only when both node $i$ and node $j$ are selected as neighbors for each other. If sym = "OR", the edge is selected when either node $i$ or node $j$ is selected as the neighbor for each other.
   }
   \item{thresh}{
-  thresholding
+  Threshold value for the estimated edge coefficients.
   }
   \item{weights_mat}{
-  Matrix containing weights for observations in each node
+  A $n \times p$ matrix containing weights for observations in each node
   }
   \item{penalty_mat}{
-  Matrix containing penalty for each node
+  A $p \times p$ matrix containing weights for each edge coefficients
   }
   \item{do_boot}{
-  logical. whether use bootstrap
+  A logical. Whether to use Stability Apprach to Regularization Selection (StARS).
   }
   \item{boot_num}{
-  The number of bootstrap.
+  The number of iteration for StARS.
   }
   \item{beta}{
-  stability selection
+  Threshold value on sparsity of the network.
   }
   \item{lambda_min_ratio}{
-  lambda min ratio
+  The smallest value for lambda, as a fraction of the $\lambda^{\text{max}}$ of the regularization parameter.
   }
   \item{init_select}{
-  whether use initial selection
+  A logical. Whether to use initial selection.
   }
   \item{nCores}{
-  The number of using cores
+  The number of cores to use for parallel computing.
   }
   \item{...}{
-  pass argument for coord zilgm
+  Other arguments that can be passed to neighborhood selection function(zilgm_poisson, zilgm_negbin, and zilgm_negbin2)
   }
 }
 \details{
@@ -68,21 +68,21 @@ Zero-inflated local graphical model
 }
 \value{
   An S3 object with the following slots
-  \item{network}{Estimated network.}
-  \item{coef_network}{estimated coefficients matrix.}
-  \item{lambda}{lambda}
-  \item{v}{optimal network index}
-  \item{opt_lambda}{optimal lambda}
+  \item{network}{a list of $p \times p$ matrices of estimated networks along the regularization path.}
+  \item{coef_network}{a array of $p \times p \times \text{nlambda}$ of estimated edge coefficients matrix along the regularization path.}
+  \item{lambda}{vector used for regularization path.}
+  \item{v}{vector of network variability measured for each regularization level.}
+  \item{opt_lambda}{The lambda that gives the optimal network.}
 }
 \references{Network analysis for excess zero}
 \author{
-Park Beomjin, Choi hosik
+Park Beomjin, 
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \examples{
-
+Not yet
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

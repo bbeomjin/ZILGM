@@ -17,43 +17,43 @@ zilgm_sum(A, n, p, zlvs, family = c("poisson", "negbin"),
   adjacency matrix
   }
   \item{n}{
-  The number of observation to generate data
+  The number of observation to generate simulated data.
   }
   \item{p}{
-  The number of nodes to generate
+  The number of variables or nodes to generate simulated data.
   }
   \item{zlvs}{
-  zero probability
+  The probability of structural zero for each variable.
   }
   \item{family}{
-  family of distribution 
+  The distribution to draw samples.
   }
   \item{signal}{
-  signal for distributio (the mean)
+  The location parameter for distribution.
   }
   \item{theta}{
-  dispersion parameter for negative binomial distribution
+  The dispersion parameter for negative binomial distribution.
   }
   \item{noise}{
-  noise parameter
+  The location parameter for noise distribution.
   }
   \item{is.symm}{
-  for symmetric matrix
+  A logical. wheter to generate symmetric matrix.
   }
 }
 \value{
-  \item{X}{The simulated data}
+  \item{X}{$n \times p$ simulated data.}
 }
 
 \details{
-For simulation data
+For simulated data
 }
 
 \references{
   Network analysis for excess zeros
 }
 \author{
-Park Beomjin, Choi hosik
+Park Beomjin,
 }
 
 \seealso{
