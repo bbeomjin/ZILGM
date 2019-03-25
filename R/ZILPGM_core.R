@@ -191,7 +191,7 @@ zilgm_poisson = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "
                       onecol_MM = wlasso_p,
                       onecol_irls = glm_p,
                       MM = pglm_p_mm,
-                      IRLS = pglm_p_mm)
+                      IRLS = pglm_p_irls)
 
   n = NROW(x)
   p = NCOL(x)
