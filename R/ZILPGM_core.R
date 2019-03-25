@@ -159,8 +159,8 @@ pglm_p_irls = function(y, x, weights, bvec0 = NULL, eta0 = NULL, mu0 = NULL,
                         lambda, penalty.factor = NULL, thresh = 1e-7, maxit = 1e+5, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
-  poisson_fit = try((penalized_glm(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, family = "poisson", penalty = "enet",
-                                   standardize = FALSE, thresh = thresh, maxit = maxit, nlambda = 1, penalty.factor = penalty.factor,
+  poisson_fit = try((penalized_glm(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, family = "poisson",
+                                   thresh = thresh, maxit = maxit, penalty.factor = penalty.factor,
                                    start = bvec0, mustart = mu0, etastart = eta0)), silent = TRUE)
   if (inherits(poisson_fit, "try-error")) {
     poisson_fit = irls_p(y = y, x = x, weights = weights, lambda = lambda, thresh = thresh, maxit = maxit,
