@@ -30,7 +30,7 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
   Algorithm for estimating edge coefficients.
   }
   \item{sym}{
-  Symmetrize the output graphs. If \code{sym = "AND"}, the edge between node \emph{i} and node \emph{j} is selected only when both node $i$ and node \emph{j} are selected as neighbors for each other. If \coed{sym = "OR"}, 
+  Symmetrize the output graphs. If \code{sym = "AND"}, the edge between node \emph{i} and node \emph{j} is selected only when both node \emph{i} and node \emph{j} are selected as neighbors for each other. If \coed{sym = "OR"}, 
   the edge is selected when either node \emph{i} or node \emph{j} is selected as the neighbor for each other.
   }
   \item{thresh}{
@@ -52,7 +52,7 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
   Threshold value on sparsity of the network.
   }
   \item{lambda_min_ratio}{
-  The smallest value for lambda, as a fraction of the \emph{\lambda^{max}} of the regularization parameter.
+  The smallest value for lambda, as a fraction of the \emph{lambda^{max}} of the regularization parameter.
   }
   \item{init_select}{
   A logical. Whether to use initial selection.
@@ -69,8 +69,8 @@ Zero-inflated local graphical model
 }
 \value{
   An S3 object with the following slots
-  \item{network}{a list of $p \times p$ matrices of estimated networks along the regularization path.}
-  \item{coef_network}{a array of $p \times p \times \text{nlambda}$ of estimated edge coefficients matrix along the regularization path.}
+  \item{network}{a list of \emph{p} x \emph{p} matrices of estimated networks along the regularization path.}
+  \item{coef_network}{a array of \emph{p} x \emph{p} x nlambda of estimated edge coefficients matrix along the regularization path.}
   \item{lambda}{vector used for regularization path.}
   \item{v}{vector of network variability measured for each regularization level.}
   \item{opt_lambda}{The lambda that gives the optimal network.}

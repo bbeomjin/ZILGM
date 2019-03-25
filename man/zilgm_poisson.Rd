@@ -4,7 +4,7 @@
 Neiborhood selection under the zero-inflated Poisson distribution for Zero-inflated Local Graphical Model
 }
 \description{
-Zero-inflated Poisson regression with $l_1$-regularization.
+Zero-inflated Poisson regression with \emph{l_1}-regularization.
 }
 \usage{
 zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,

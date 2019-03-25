@@ -4,7 +4,7 @@
 Neiborhood selection under the zero-inflated negative binomial distribution for Zero-inflated Local Graphical Model
 }
 \description{
-Zero-inflated negative binomial regression with $l_1$-regularization.
+Zero-inflated negative binomial regression with \emph{l_1}-regularization.
 }
 \usage{
 zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
