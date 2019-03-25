@@ -78,7 +78,7 @@ irls_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL
     z = eta0 + (y - mu0) / mu0
 
     bobj = glmnet(x = x, y = z, family = "gaussian", weights = w * weights, lambda = lambda / sum(w * weights),
-                  standardize = FALSE, alpha = 1, thresh = thresh, maxit = 10 * maxit, nlambda = 1, penalty.factor = panelty.factor)
+                  standardize = FALSE, alpha = 1, thresh = thresh, maxit = 10 * maxit, nlambda = 1, penalty.factor = penalty.factor)
 
     bvec = drop(coefficients(bobj))
     eta = drop(bvec[1] + x %*% bvec[-1])

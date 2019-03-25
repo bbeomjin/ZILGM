@@ -1,5 +1,5 @@
 penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart = NULL,lambda = NULL,
-                         alpha = 1, gamma = 3, rescale = TRUE, standardize = TRUE, penalty.factor = rep(1, nvars),thresh=1e-6, 
+                         alpha = 1, gamma = 3, rescale = TRUE, standardize = TRUE, penalty.factor = rep(1, p),thresh = 1e-6, 
                          eps.bino = 1e-5, maxit = 1000, eps = .Machine$double.eps, theta, family = c("gaussian", "binomial", "poisson", "negbin"),
                          x.keep = FALSE, y.keep = TRUE, trace = FALSE)
 {
