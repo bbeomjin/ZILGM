@@ -24,7 +24,7 @@ Park Beomjin,
 Maintainer : Park Beomjin <bbbeomjin@gmail.com>
 }
 
-\references{Network analysis for excess zero}
+\references{Network analysis for Count data with excess zero}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 

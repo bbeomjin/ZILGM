@@ -10,7 +10,7 @@ Compute the maximum lambda
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{
-  A $n \times p$ data matrix.
+  A \emph{n} x \emph{p} data matrix.
 }
 }
 \details{
@@ -20,7 +20,7 @@ Zero-inflated local graphical model
   An S3 object with the following slots
   \item{lammax}{a maximum lambda from data matrix}
 }
-\references{Network analysis for excess zero}
+\references{Network analysis for Count data with excess zero}
 \author{
 Park Beomjin, 
 }

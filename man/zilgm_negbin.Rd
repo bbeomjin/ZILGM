@@ -13,13 +13,13 @@ zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalt
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{y}{
-  A response $y$.
+  A response \emph{y}.
 }
   \item{x}{
-  A design matrix $x$.
+  A design matrix \emph{x}.
   }
   \item{lambda}{
-  A regularization parameter to control a level of $l_1$-penalty.
+  A regularization parameter to control a level of \emph{l_1}-penalty.
   }
   \item{weights}{
   Weights vector for observations
@@ -59,10 +59,10 @@ Zero-inflated local graphical model
   \item{prob}{Estimated probability of structural zero.}
   \item{pos_zero}{Indices of zero values.}
   \item{iteration}{Iteration numbers until convergence.}
-  \item{loglik}{$l_1$-penalized negative log-likelihood value.}
+  \item{loglik}{\emph{l_1}-penalized negative log-likelihood value.}
   \item{call}{The mathced call.}
 }
-\references{Network analysis for excess zero}
+\references{Network analysis for Count data with excess zero}
 \author{
 Park Beomjin, 
 }

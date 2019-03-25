@@ -14,7 +14,7 @@ zilgm_sum(A, n, p, zlvs, family = c("poisson", "negbin"),
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{A}{
-  adjacency matrix
+  \emph{p} x \emph{p} adjacency matrix
   }
   \item{n}{
   The number of observation to generate simulated data.
@@ -42,7 +42,7 @@ zilgm_sum(A, n, p, zlvs, family = c("poisson", "negbin"),
   }
 }
 \value{
-  \item{X}{$n \times p$ simulated data.}
+  \item{X}{\emph{n} x \emph{p} simulated data.}
 }
 
 \details{
@@ -50,7 +50,7 @@ For simulated data
 }
 
 \references{
-  Network analysis for excess zeros
+  Network analysis for Count data with excess zeros
 }
 \author{
 Park Beomjin,

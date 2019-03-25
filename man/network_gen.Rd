@@ -28,7 +28,7 @@ For simulated data
 }
 
 \references{
-  Network analysis for excess zeros
+  Network analysis for Count data with excess zeros
 }
 \author{
 Park Beomjin,
