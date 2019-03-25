@@ -103,7 +103,7 @@ penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart =
       stop("length of start doesn't match x dimension\n")
     else{
       startv = 1
-      beta[,j] = start[-1]
+      beta = start[-1]
       b0 = start[1]
     }
   }
@@ -190,7 +190,7 @@ penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart =
   ###penalized log-likelihood function value for rescaled beta
   
   penval = .Fortran("penGLM", 
-                    start=as.double(beta[,1]),
+                    start=as.double(beta[, 1]),
                     m = as.integer(p),
                     lambda = as.double(RET$lambda * penalty.factor),
                     alpha = as.double(alpha),
