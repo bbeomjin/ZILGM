@@ -1,7 +1,7 @@
-penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart = NULL,lambda = NULL,
-                         alpha = 1, gamma = 3, rescale = TRUE, standardize = TRUE, penalty.factor = rep(1, p),thresh = 1e-6, 
+penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart = NULL, lambda = NULL,
+                         alpha = 1, gamma = 3, rescale = TRUE, penalty.factor = rep(1, p), thresh = 1e-6, 
                          eps.bino = 1e-5, maxit = 1000, eps = .Machine$double.eps, theta, family = c("gaussian", "binomial", "poisson", "negbin"),
-                         x.keep = FALSE, y.keep = TRUE, trace = FALSE)
+                         trace = FALSE)
 {
   family = match.arg(family)
   if(!family %in% c("gaussian", "binomial", "poisson", "negbin")){
@@ -65,7 +65,7 @@ penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart =
                     "poisson"=3,
                     "negbin"=4)
   pentype = 1
-  stantype = as.numeric(standardize)
+  stantype = as.numeric(FALSE)
   #  warning("alp = 1/theta in glm negative.binomial function\n")
   if(length(penalty.factor) != p) stop("number of penalty.factor should be the same as nvars")
   im = inactive = seq(p)
@@ -183,7 +183,7 @@ penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart =
     rownames(beta) = colnames(x)
     colnames(beta) = round(lambda, digits = 4)
   }
-  RET = list(family = family, standardize = standardize, satu = tmp$satu, lambda = lambda[good], beta = beta, b0 = b0,
+  RET = list(family = family, satu = tmp$satu, lambda = lambda[good], beta = beta, b0 = b0,
              theta = theta[good], pll = pll, fitted.values = yhat, converged = tmp$convout[good],
              alpha=alpha)
   class(RET) = c("glmreg", "zilgm")
