@@ -30,7 +30,7 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
   Algorithm for estimating edge coefficients.
   }
   \item{sym}{
-  Symmetrize the output graphs. If \code{sym = "AND"}, the edge between node \emph{i} and node \emph{j} is selected only when both node \emph{i} and node \emph{j} are selected as neighbors for each other. If \coed{sym = "OR"}, 
+  Symmetrize the output graphs. If \code{sym = "AND"}, the edge between node \emph{i} and node \emph{j} is selected only when both node \emph{i} and node \emph{j} are selected as neighbors for each other. If \code{sym = "OR"}, 
   the edge is selected when either node \emph{i} or node \emph{j} is selected as the neighbor for each other.
   }
   \item{thresh}{
