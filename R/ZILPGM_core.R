@@ -1,6 +1,6 @@
 # Poisson regression with l1 regularization for x with 1 columns using MM algorithm
 wlasso_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
-                    lambda, thresh = 1e-7, maxit = 100, n = NROW(x), p = NCOL(x))
+                    lambda, thresh = 1e-6, maxit = 100, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
   obj_prev = 1e+150
@@ -49,7 +49,7 @@ wlasso_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NUL
 
 # Poisson regression with l1 regularization for x with 1 columns using IRLS algorithm
 glm_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
-                 lambda, thresh = 1e-7, maxit = 100, n = NROW(x), p = NCOL(x))
+                 lambda, thresh = 1e-6, maxit = 100, n = NROW(x), p = NCOL(x))
 {
   bobj = glm.fit(x = cbind(1, x), y = y, family = "poisson", intercept = TRUE, weights = n * weights,
                  control = list(epsilon = thresh, maxit = maxit), etastart = eta0, mustart = mu0)
@@ -110,7 +110,7 @@ irls_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
 
 
 pglm_p_mm = function(y, x, weights, penalty.factor = NULL, bvec0 = NULL, eta0 = NULL, mu0 = NULL,
-                      lambda, thresh = 1e-7, maxit = 100, n = NROW(x), p = NCOL(x))
+                      lambda, thresh = 1e-6, maxit = 100, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
   obj_prev = 1e+150
@@ -156,7 +156,7 @@ pglm_p_mm = function(y, x, weights, penalty.factor = NULL, bvec0 = NULL, eta0 = 
 }
 
 pglm_p_irls = function(y, x, weights, bvec0 = NULL, eta0 = NULL, mu0 = NULL,
-                        lambda, penalty.factor = NULL, thresh = 1e-7, maxit = 1e+5, n = NROW(x), p = NCOL(x))
+                       lambda, penalty.factor = rep(1, NCOL(x)), thresh = 1e-6, maxit = 1e+3, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
   poisson_fit = try((penalized_glm(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, family = "poisson",

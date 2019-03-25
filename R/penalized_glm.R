@@ -57,8 +57,7 @@ penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart =
   }
   if(family != "negbin") theta = 1 ### this theta is not useful but required as input in Fortran glmlink subroutine
   tracetype = 0
-  if(trace)
-    tracetype = 1
+  if(trace) tracetype = 1
   famtype = switch(family,
                     "gaussian"=1,
                     "binomial"=2,
@@ -185,7 +184,7 @@ penalized_glm = function(x, y, weights, start = NULL, etastart = NULL, mustart =
   }
   RET = list(family = family, satu = tmp$satu, lambda = lambda[good], beta = beta, b0 = b0,
              theta = theta[good], pll = pll, fitted.values = yhat, converged = tmp$convout[good],
-             alpha=alpha)
+             alpha = alpha)
   class(RET) = c("glmreg", "zilgm")
   ###penalized log-likelihood function value for rescaled beta
   

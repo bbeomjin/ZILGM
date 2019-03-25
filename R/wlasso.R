@@ -150,7 +150,7 @@ wlasso <- function(X, y, eta0=0, wID=rep(1,nrow(X)), weight=rep(1,ncol(X)),
       ObjValTrace[Step] = getObjective(Residual, wID, Beta, eta, weight)
       BetaMatr[Step,]   = Beta     
       LamTrace[Step]    = eta         
-      break
+      # break
     }else{
       cat("Error: EPO is not correct value.!!!\n")
     }        
@@ -204,7 +204,7 @@ rderiv <- function(XV, wmat, nV, wSignV, eps=1e-8){
   if(tmpqr$rank < nV){
     sol = rep(0,nV)
     sol[nV] = 1e5 # return delta which has a big postive value.
-    break
+    # break
   }
   else{
     sol = array(qr.solve(tmpqr,b)) #gamma_Active

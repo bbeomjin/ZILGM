@@ -1,6 +1,6 @@
 # NB regression with l1 regularization for x with 1 columns
 wlasso_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL, theta0 = NULL,
-                     lambda, thresh = 1e-7, maxit = 100, n = NROW(x), p = NCOL(x))
+                     lambda, thresh = 1e-6, maxit = 100, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
   obj_prev = 1e+150
@@ -48,7 +48,7 @@ wlasso_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NU
 }
 
 glm_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL, theta0 = NULL,
-                  lambda, thresh = 1e-7, maxit = 100, n = NROW(x), p = NCOL(x))
+                  lambda, thresh = 1e-6, maxit = 100, n = NROW(x), p = NCOL(x))
 {
   bobj = glm.fit(x = cbind(1, x), y = y, family = negative.binomial(theta = theta0), intercept = TRUE, weights = n * weights,
                  control = list(epsilon = thresh, maxit = maxit), etastart = eta0, mustart = mu0)
@@ -60,7 +60,7 @@ glm_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
 
 
 irls_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL, theta0 = NULL,
-                   lambda, thresh = 1e-7, maxit = 100, n = NROW(x), p = NCOL(x))
+                   lambda, thresh = 1e-6, maxit = 100, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
   obj_prev = 1e+150
@@ -109,7 +109,7 @@ irls_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL
 
 # NB regression with l1 regularization using MM algorithm
 pglm_nb_mm = function(y, x, weights, penalty.factor = NULL, bvec0 = NULL, eta0 = NULL, mu0 = NULL, theta0 = NULL,
-                 lambda, thresh = 1e-7, maxit = 100, n = NROW(x), p = NCOL(x))
+                 lambda, thresh = 1e-6, maxit = 100, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
   obj_prev = 1e+150
@@ -157,7 +157,7 @@ pglm_nb_mm = function(y, x, weights, penalty.factor = NULL, bvec0 = NULL, eta0 =
 
 # NB regression with l1 regularization using IRLS algorithm
 pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL, mu0 = NULL,
-                   lambda, penalty.factor = NULL, thresh = 1e-6, maxit = 1e+3, n = NROW(x), p = NCOL(x))
+                   lambda, penalty.factor = rep(1, NCOL(x)), thresh = 1e-6, maxit = 1e+3, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
   negbin_fit = try((penalized_glm(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, theta = theta0, 
