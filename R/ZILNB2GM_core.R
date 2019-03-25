@@ -120,6 +120,6 @@ zilgm_negbin2 = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "
   out$iterations = iter
   out$loglik = erisk
   out$call = fun_call
-  
+  class(out) = "zilgm"
   return(out)
 }

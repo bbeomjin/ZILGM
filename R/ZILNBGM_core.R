@@ -53,8 +53,8 @@ glm_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
   bobj = glm.fit(x = cbind(1, x), y = y, family = negative.binomial(theta = theta0), intercept = TRUE, weights = n * weights,
                  control = list(epsilon = thresh, maxit = maxit), etastart = eta0, mustart = mu0)
   bvec = bobj$coefficients
-  eta = drop(bvec[1] + x %*% bvec[-1])
-  mu = exp(eta)
+  mu = bobj$fitted.values
+  eta = log(mu)
   return(list(bvec = bvec, mu = mu, eta = eta, theta = theta0, iter = 0))
 }
 
@@ -328,6 +328,6 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
   out$iterations = iter
   out$loglik = erisk
   out$call = fun_call
-
+  class(out) = "zilgm"
   return(out)
 }

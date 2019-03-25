@@ -54,8 +54,8 @@ glm_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
   bobj = glm.fit(x = cbind(1, x), y = y, family = "poisson", intercept = TRUE, weights = n * weights,
                  control = list(epsilon = thresh, maxit = maxit), etastart = eta0, mustart = mu0)
   bvec = bobj$coefficients
-  eta = drop(bvec[1] + x %*% bvec[-1])
-  mu = exp(eta)
+  mu = bobj$fitted.values
+  eta = log(mu)
   return(list(bvec = bvec, mu = mu, eta = eta, iter = 0))
 }
 
@@ -291,5 +291,6 @@ zilgm_poisson = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "
   out$loglik = erisk
   out$z = z
   out$call = fun_call
+  class(out) = "zilgm"
   return(out)
 }

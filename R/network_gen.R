@@ -19,7 +19,7 @@ generate_network = function(node, prob) {
   return(networkmat)
 }
 
-zigm_sim = function(A, n, p, zlvs, family = c("poisson", "negbin"),
+zilgm_sim = function(A, n, p, zlvs, family = c("poisson", "negbin"),
                      signal, theta = NULL, noise, is.symm = TRUE)
 {
   family = match.arg(family)

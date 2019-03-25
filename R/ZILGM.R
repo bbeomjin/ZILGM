@@ -115,6 +115,8 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
   return(out)
 }
 
+
+
 zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"), sym = c("AND", "OR"), 
                         thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL, init_select = FALSE, nCores, n, p, ...)
 {
