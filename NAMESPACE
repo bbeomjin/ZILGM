@@ -1,5 +1,3 @@
-useDynLib(ZILGM)
-
 export(zilgm, zilgm_poisson, zilgm_negbin, zilgm_negbin2, zilgm_sim, find_lammax, generate_network)
 exportClasses("zilgm")
 
