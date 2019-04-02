@@ -161,10 +161,10 @@ pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL,
                    lambda, penalty.factor = rep(1, NCOL(x)), thresh = 1e-6, maxit = 1e+3, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
-  negbin_fit = try((glmreg_fit(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, theta = theta0, 
-                               family = "negbin", thresh = thresh, maxit = maxit, penalty.factor = penalty.factor,
-                               start = bvec0, mustart = mu0, etastart = eta0, standardize = FALSE, penalty = "enet",
-                               x.keep = FALSE, y.keep = FALSE, trace = FALSE)), silent = TRUE)
+  negbin_fit = try((glmreg(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, theta = theta0, 
+                           family = "negbin", thresh = thresh, maxit = maxit, penalty.factor = penalty.factor,
+                           start = bvec0, mustart = mu0, etastart = eta0, standardize = FALSE, penalty = "enet",
+                           x.keep = FALSE, y.keep = FALSE, trace = FALSE)), silent = TRUE)
   if (inherits(negbin_fit, "try-error")) {
     negbin_fit = irls_nb(y = y, x = x, weights = weights, lambda = lambda, theta0 = theta0,
                           thresh = thresh, maxit = maxit, penalty.factor = penalty.factor, eta0 = eta0, mu0 = mu0)
