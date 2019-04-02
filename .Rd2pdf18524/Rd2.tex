@@ -1,0 +1,577 @@
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{utf8}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{What the Package Does (Title Case)}
+\item[Version]\AsIs{0.1.0}
+\item[Author]\AsIs{Who wrote it}
+\item[Maintainer]\AsIs{The package maintainer }\email{yourself@somewhere.net}\AsIs{}
+\item[Description]\AsIs{More about what it does (maybe more than one line)
+Use four spaces when indenting paragraphs within the Description.}
+\item[License]\AsIs{What license is it under?}
+\item[Encoding]\AsIs{UTF-8}
+\item[LazyData]\AsIs{true}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{ZILGM-package}{A R Package to estimate Local Markov Network for Count data with zero-inflated and overdispersion.}{ZILGM.Rdash.package}
+%
+\begin{Description}\relax
+A R Package to estimate Local Markov Network for Count data with zero-inflated and overdispersion.
+\end{Description}
+%
+\begin{Details}\relax
+
+\Tabular{rl}{
+Package: & ZILGM\\{}
+Type: & Package\\{}
+Version: & 1.0\\{}
+Date: & 2019-03-25\\{}
+License: & GPL-2\\{}
+}
+\end{Details}
+%
+\begin{Author}\relax
+Park Beomjin, 
+
+Maintainer : Park Beomjin <bbbeomjin@gmail.com>
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zero
+\end{References}
+%
+\begin{Examples}
+\begin{ExampleCode}
+library(devtools)
+install_github(bbeomjin/ZILGM)
+library(ZILGM)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{find\_lammax}{Compute the maximum lambda}{find.Rul.lammax}
+%
+\begin{Description}\relax
+Compute the maximum lambda
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+find_lammax(X)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{X}] 
+A \emph{n} x \emph{p} data matrix.
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Zero-inflated local graphical model
+\end{Details}
+%
+\begin{Value}
+An S3 object with the following slots
+\begin{ldescription}
+\item[\code{lammax}] a maximum lambda from data matrix
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Park Beomjin, 
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zero
+\end{References}
+%
+\begin{Examples}
+\begin{ExampleCode}
+Not yet
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{network\_gen}{Generate random graph structure}{network.Rul.gen}
+%
+\begin{Description}\relax
+Generate random graph structure
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+generate_network(node, prob)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{node}] 
+The number of nodes to generate graph.
+
+\item[\code{prob}] 
+The probability of appearing edges. 
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+For simulated data
+\end{Details}
+%
+\begin{Value}
+\begin{ldescription}
+\item[\code{networkmat}] Adjacency matrix for random graph.
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Park Beomjin,
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zeros
+\end{References}
+%
+\begin{SeeAlso}\relax
+\LinkA{zilgm}{zilgm}
+\end{SeeAlso}
+%
+\begin{Examples}
+\begin{ExampleCode}
+require(ZILGM)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{zilgm}{Zero-inflated Local Graphical Model}{zilgm}
+%
+\begin{Description}\relax
+Zero-inflated Local Graphical Model
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"), 
+                sym = c("AND", "OR"), thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL,
+                do_boot = FALSE, boot_num = 10, beta = 0.05, lambda_min_ratio = 1e-4,
+                init_select = FALSE, nCores, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{X}] 
+A \emph{n} x \emph{p} data matrix, where \emph{n} is the number of observations and \emph{p} is the number of variables or nodes.
+
+\item[\code{lambda}] 
+A sequence of regularization parameter to control a level of \emph{l\_1}-penalty.
+
+\item[\code{nlambda}] 
+The number of regularization parameter.
+
+\item[\code{family}] 
+Types of node-conditional distribution to be assumed among zero-inflated distributions.
+
+\item[\code{update\_type}] 
+Algorithm for estimating edge coefficients.
+
+\item[\code{sym}] 
+Symmetrize the output graphs. If \code{sym = "AND"}, the edge between node \emph{i} and node \emph{j} is selected only when both node \emph{i} and node \emph{j} are selected as neighbors for each other. If \code{sym = "OR"}, 
+the edge is selected when either node \emph{i} or node \emph{j} is selected as the neighbor for each other.
+
+\item[\code{thresh}] 
+Threshold value for the estimated edge coefficients.
+
+\item[\code{weights\_mat}] 
+A \emph{n} x \emph{p} matrix containing weights for observations in each node
+
+\item[\code{penalty\_mat}] 
+A \emph{p} x \emph{p} matrix containing weights for each edge coefficients
+
+\item[\code{do\_boot}] 
+A logical. Whether to use Stability Apprach to Regularization Selection (StARS).
+
+\item[\code{boot\_num}] 
+The number of iteration for StARS.
+
+\item[\code{beta}] 
+Threshold value on sparsity of the network.
+
+\item[\code{lambda\_min\_ratio}] 
+The smallest value for lambda, as a fraction of the \emph{lambda\textasciicircum{}max} of the regularization parameter.
+
+\item[\code{init\_select}] 
+A logical. Whether to use initial selection.
+
+\item[\code{nCores}] 
+The number of cores to use for parallel computing.
+
+\item[\code{...}] 
+Other arguments that can be passed to neighborhood selection function(\code{zilgm\_poisson, zilgm\_negbin, and zilgm\_negbin2})
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Zero-inflated local graphical model
+\end{Details}
+%
+\begin{Value}
+An S3 object with the following slots
+\begin{ldescription}
+\item[\code{network}] a list of \emph{p} x \emph{p} matrices of estimated networks along the regularization path.
+\item[\code{coef\_network}] a array of \emph{p} x \emph{p} x nlambda of estimated edge coefficients matrix along the regularization path.
+\item[\code{lambda}] vector used for regularization path.
+\item[\code{v}] vector of network variability measured for each regularization level.
+\item[\code{opt\_lambda}] The lambda that gives the optimal network.
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Park Beomjin, 
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zero
+\end{References}
+%
+\begin{Examples}
+\begin{ExampleCode}
+Not yet
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{zilgm\_negbin}{Neiborhood selection under the zero-inflated negative binomial distribution for Zero-inflated Local Graphical Model}{zilgm.Rul.negbin}
+%
+\begin{Description}\relax
+Zero-inflated negative binomial regression with \emph{l\_1}-regularization.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
+              thresh = 1e-6, EM_tol = 1e-6, EM_iter = 500, tol = 1e-6, maxit = 1e+3, fixed_theta = FALSE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{y}] 
+A response \emph{y}.
+
+\item[\code{x}] 
+A design matrix \emph{x}.
+
+\item[\code{lambda}] 
+A regularization parameter to control a level of \emph{l\_1}-penalty.
+
+\item[\code{weights}] 
+Weights vector for observations
+
+\item[\code{update\_type}] 
+Algorithm for estimating coefficients
+
+\item[\code{penalty.factor}] 
+Weights vector for coefficients of each variable.
+
+\item[\code{thresh}] 
+Threshold value for the estimated coefficients.
+
+\item[\code{EM\_tol}] 
+Convergence tolerance for EM algorithm.
+
+\item[\code{EM\_iter}] 
+Maximum number of EM algorithm iterations.
+
+\item[\code{tol}] 
+Convergence tolerance for coordinate descent.
+
+\item[\code{maxit}] 
+Maximum number of coordinate descent iterations.
+
+\item[\code{fixed\_theta}] 
+A logical. Whether to estimate dispersion parameter theta.
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Zero-inflated local graphical model
+\end{Details}
+%
+\begin{Value}
+An S3 object with the following slots
+\begin{ldescription}
+\item[\code{beta}] Estimated coefficients vector.
+\item[\code{theta}] Estimated dispersion parameter theta.
+\item[\code{prob}] Estimated probability of structural zero.
+\item[\code{pos\_zero}] Indices of zero values.
+\item[\code{iteration}] Iteration numbers until convergence.
+\item[\code{loglik}] \emph{l\_1}-penalized negative log-likelihood value.
+\item[\code{call}] The mathced call.
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Park Beomjin, 
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zero
+\end{References}
+\inputencoding{utf8}
+\HeaderA{zilgm\_negbin2}{Neiborhood selection under the zero-inflated negative binomial II distribution for Zero-inflated Local Graphical Model}{zilgm.Rul.negbin2}
+%
+\begin{Description}\relax
+Zero-inflated negative binomial regression with \emph{l\_1}-regularization.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+zilgm_negbin2(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
+              thresh = 1e-6, EM_tol = 1e-6, EM_iter = 500, tol = 1e-6, maxit = 1e+3, fixed_sigma = FALSE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{y}] 
+A response \emph{y}.
+
+\item[\code{x}] 
+A design matrix \emph{x}.
+
+\item[\code{lambda}] 
+A regularization parameter to control a level of \emph{l\_1}-penalty.
+
+\item[\code{weights}] 
+Weights vector for observations
+
+\item[\code{update\_type}] 
+Algorithm for estimating coefficients
+
+\item[\code{penalty.factor}] 
+Weights vector for coefficients of each variable.
+
+\item[\code{thresh}] 
+Threshold value for the estimated coefficients.
+
+\item[\code{EM\_tol}] 
+Convergence tolerance for EM algorithm.
+
+\item[\code{EM\_iter}] 
+Maximum number of EM algorithm iterations.
+
+\item[\code{tol}] 
+Convergence tolerance for coordinate descent.
+
+\item[\code{maxit}] 
+Maximum number of coordinate descent iterations.
+
+\item[\code{fixed\_sigma}] 
+A logical. Whether to estimate dispersion parameter sigma.
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Zero-inflated local graphical model
+\end{Details}
+%
+\begin{Value}
+An S3 object with the following slots
+\begin{ldescription}
+\item[\code{beta}] Estimated coefficients vector.
+\item[\code{sigma}] Estimated dispersion parameter sigma.
+\item[\code{prob}] Estimated probability of structural zero.
+\item[\code{pos\_zero}] Indices of zero values.
+\item[\code{iteration}] Iteration numbers until convergence.
+\item[\code{loglik}] \emph{l\_1}-penalized negative log-likelihood value.
+\item[\code{call}] The mathced call.
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Park Beomjin, 
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zero
+\end{References}
+%
+\begin{Examples}
+\begin{ExampleCode}
+Not yet.
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{zilgm\_poisson}{Neiborhood selection under the zero-inflated Poisson distribution for Zero-inflated Local Graphical Model}{zilgm.Rul.poisson}
+%
+\begin{Description}\relax
+Zero-inflated Poisson regression with \emph{l\_1}-regularization.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
+              thresh = 1e-6, EM_tol = 1e-6, EM_iter = 500, tol = 1e-6, maxit = 1e+3)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{y}] 
+A response \emph{y}.
+
+\item[\code{x}] 
+A design matrix \emph{x}.
+
+\item[\code{lambda}] 
+A regularization parameter to control a level of \emph{l\_1}-penalty.
+
+\item[\code{weights}] 
+Weights vector for observations
+
+\item[\code{update\_type}] 
+Algorithm for estimating coefficients
+
+\item[\code{penalty.factor}] 
+Weights vector for coefficients of each variable.
+
+\item[\code{thresh}] 
+Threshold value for the estimated coefficients.
+
+\item[\code{EM\_tol}] 
+Convergence tolerance for EM algorithm.
+
+\item[\code{EM\_iter}] 
+Maximum number of EM algorithm iterations.
+
+\item[\code{tol}] 
+Convergence tolerance for coordinate descent.
+
+\item[\code{maxit}] 
+Maximum number of coordinate descent iterations.
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Zero-inflated local graphical model
+\end{Details}
+%
+\begin{Value}
+An S3 object with the following slots
+\begin{ldescription}
+\item[\code{beta}] Estimated coefficients vector.
+\item[\code{prob}] Estimated probability of structural zero.
+\item[\code{pos\_zero}] Indices of zero values.
+\item[\code{iteration}] Iteration numbers until convergence.
+\item[\code{loglik}] \emph{l\_1}-penalized negative log-likelihood value.
+\item[\code{z}] Estimated latent variable.
+\item[\code{call}] The mathced call.
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Park Beomjin, 
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zero
+\end{References}
+%
+\begin{Examples}
+\begin{ExampleCode}
+Not yet
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{zilgm\_sim}{Generate simulation data for zilgm}{zilgm.Rul.sim}
+%
+\begin{Description}\relax
+Generate simulation data for zilgm
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+zilgm_sum(A, n, p, zlvs, family = c("poisson", "negbin"),
+          signal, theta = NULL, noise, is.symm = TRUE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{A}] 
+\emph{p} x \emph{p} adjacency matrix
+
+\item[\code{n}] 
+The number of observation to generate simulated data.
+
+\item[\code{p}] 
+The number of variables or nodes to generate simulated data.
+
+\item[\code{zlvs}] 
+The probability of structural zero for each variable.
+
+\item[\code{family}] 
+The distribution to draw samples.
+
+\item[\code{signal}] 
+The location parameter for distribution.
+
+\item[\code{theta}] 
+The dispersion parameter for negative binomial distribution.
+
+\item[\code{noise}] 
+The location parameter for noise distribution.
+
+\item[\code{is.symm}] 
+A logical. wheter to generate symmetric matrix.
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+For simulated data
+\end{Details}
+%
+\begin{Value}
+\begin{ldescription}
+\item[\code{X}] \emph{n} x \emph{p} simulated data.
+\end{ldescription}
+\end{Value}
+%
+\begin{Author}\relax
+Park Beomjin,
+\end{Author}
+%
+\begin{References}\relax
+Network analysis for Count data with excess zeros
+\end{References}
+%
+\begin{SeeAlso}\relax
+\LinkA{zilgm}{zilgm}
+\end{SeeAlso}
+%
+\begin{Examples}
+\begin{ExampleCode}
+require(ZILGM)
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}
