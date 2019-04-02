@@ -85,9 +85,9 @@ Park Beomjin,
 \examples{
 require(ZILGM)
 n = 100; p = 30; prob = 2 / p;
-simul_dat = zilgm_sim(prob = prob, n = n, p = p, zlvs = 0.1, 
+A = generate_random_network(p, prob)
+simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
 					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
-
 lambda_max = find_lammax(simul_dat$X)
 lambda_min = 1e-4 * lambda_max
 lambs = exp(seq(log(lambda_max), log(lambda_min), length.out = 50))

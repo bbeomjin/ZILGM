@@ -5,7 +5,7 @@
 Generate simulated data for ZILGM models
 }
 \description{
-Generate data from zero-inflated multivariate Poisson or negative binomial distribution with random graph structure.
+Generate data from zero-inflated multivariate Poisson or negative binomial distribution under given graph structure.
 }
 \usage{
 zilgm_sim(A, n, p, zlvs, family = c("poisson", "negbin"),
@@ -13,8 +13,8 @@ zilgm_sim(A, n, p, zlvs, family = c("poisson", "negbin"),
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{prob}{
-  The probability that the edges of the random graph appear.
+  \item{A}{
+  A \emph{p} x \emph{p} adjacency matrix following graph structure.
   }
   \item{n}{
   The number of observation to generate simulated data.
@@ -57,7 +57,8 @@ Park Beomjin,
 \examples{
 require(ZILGM)
 n = 100; p = 30; prob = 2 / p;
-simul_dat = zilgm_sim(prob = prob, n = n, p = p, zlvs = 0.1, 
+A = generate_random_network(p, prob)
+simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
 					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

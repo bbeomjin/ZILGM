@@ -1,31 +1,29 @@
 require(network)
 
+generate_random_network = function(node, prob) {
+  # Generate matrix values, sampling 0 or 1 with given probabilities
+  matvals = sample(c(0, 1), node * (node - 1)/2, 
+                   replace = TRUE, prob = c(1 - prob, prob))
+  
+  # From the values above, generate a symmetric matrix
+  networkmat = matrix(rep(0, node * node), ncol = node)
+  mv = 1
+  for (i in 1:node) {
+    for (j in 1:node) {
+      if (i > j) {
+        networkmat[i, j] = networkmat[j, i] = matvals[mv]
+        mv = mv + 1
+      }
+    }
+  }
+  return(networkmat)
+}
+
 zilgm_sim = function(prob, n, p, zlvs, family = c("poisson", "negbin"),
                      signal, theta = NULL, noise)
 {
   family = match.arg(family)
   is.symm = TRUE
-  
-  .generate_network = function(node, prob) {
-    # Generate matrix values, sampling 0 or 1 with given probabilities
-    matvals = sample(c(0, 1), node * (node - 1)/2, 
-                     replace = TRUE, prob = c(1 - prob, prob))
-    
-    # From the values above, generate a symmetric matrix
-    networkmat = matrix(rep(0, node * node), ncol = node)
-    mv = 1
-    for (i in 1:node) {
-      for (j in 1:node) {
-        if (i > j) {
-          networkmat[i, j] = networkmat[j, i] = matvals[mv]
-          mv = mv + 1
-        }
-      }
-    }
-    return(networkmat)
-  }
-  
-  A = .generate_network(node = p, prob = prob)
   
   npair = p * (p - 1) / 2
   Y = E = matrix(0, nrow = n, ncol = p)

@@ -70,7 +70,8 @@ Park Beomjin,
 # Zero-inflated negative binomial regression with l_1 penalty
 require(ZILGM)
 n = 100; p = 30; prob = 2 / p;
-simul_dat = zilgm_sim(prob = prob, n = n, p = p, zlvs = 0.1, 
+A = generate_random_network(p, prob)
+simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
 					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
 y = simul_dat$X[, 1]
 X = simul_dat$X[, -1]

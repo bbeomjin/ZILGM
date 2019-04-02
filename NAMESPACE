@@ -1,4 +1,4 @@
-export(zilgm, zilgm_poisson, zilgm_negbin, zilgm_negbin2, zilgm_sim, find_lammax)
+export(zilgm, zilgm_poisson, zilgm_negbin, zilgm_negbin2, generate_random_network, zilgm_sim, find_lammax)
 exportClasses("zilgm")
 
 import("methods")
