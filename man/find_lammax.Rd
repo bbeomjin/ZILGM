@@ -1,10 +1,10 @@
 \name{find_lammax}
 \alias{find_lammax}
 \title{
-Compute the maximum lambda
+Compute the maximum \code{lambda}
 }
 \description{
-Compute the maximum lambda
+Compute the maximum \code{lambda} from Karush-Kuhn-Tucker condition
 }
 \usage{find_lammax(X)}
 %- maybe also 'usage' for other objects documented here.
@@ -17,10 +17,9 @@ Compute the maximum lambda
 Zero-inflated local graphical model
 }
 \value{
-  An S3 object with the following slots
-  \item{lammax}{a maximum lambda from data matrix}
+  a numeric value
 }
-\references{Network analysis for Count data with excess zero}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
 \author{
 Park Beomjin, 
 }

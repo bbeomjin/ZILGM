@@ -2,19 +2,19 @@
 \alias{zilgm_sim}
 
 \title{
-Generate simulation data for zilgm
+Generate simulated data for ZILGM models
 }
 \description{
-Generate simulation data for zilgm
+Generate data from zero-inflated multivariate Poisson or negative binomial distribution with random graph structure.
 }
 \usage{
-zilgm_sum(A, n, p, zlvs, family = c("poisson", "negbin"),
-          signal, theta = NULL, noise, is.symm = TRUE)
+zilgm_sim(A, n, p, zlvs, family = c("poisson", "negbin"),
+          signal, theta = NULL, noise)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{A}{
-  \emph{p} x \emph{p} adjacency matrix
+  \item{prob}{
+  The probability that the edges of the random graph appear.
   }
   \item{n}{
   The number of observation to generate simulated data.
@@ -23,13 +23,13 @@ zilgm_sum(A, n, p, zlvs, family = c("poisson", "negbin"),
   The number of variables or nodes to generate simulated data.
   }
   \item{zlvs}{
-  The probability of structural zero for each variable.
+  The probability of structural zero for each variable or nodes.
   }
   \item{family}{
   The distribution to draw samples.
   }
   \item{signal}{
-  The location parameter for distribution.
+  The location parameter for distribution. 
   }
   \item{theta}{
   The dispersion parameter for negative binomial distribution.
@@ -37,21 +37,16 @@ zilgm_sum(A, n, p, zlvs, family = c("poisson", "negbin"),
   \item{noise}{
   The location parameter for noise distribution.
   }
-  \item{is.symm}{
-  A logical. wheter to generate symmetric matrix.
-  }
 }
 \value{
+A list of two elements:
+  \item{A}{\emph{p} x \emph{p} adjacency matrix of the random graph.}
   \item{X}{\emph{n} x \emph{p} simulated data.}
 }
 
-\details{
-For simulated data
-}
 
-\references{
-  Network analysis for Count data with excess zeros
-}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
+
 \author{
 Park Beomjin,
 }
@@ -61,6 +56,9 @@ Park Beomjin,
 }
 \examples{
 require(ZILGM)
+n = 100; p = 30; prob = 2 / p;
+simul_dat = zilgm_sim(prob = prob, n = n, p = p, zlvs = 0.1, 
+					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

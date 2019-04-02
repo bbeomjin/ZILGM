@@ -1,10 +1,10 @@
 \name{zilgm}
 \alias{zilgm}
 \title{
-Zero-inflated Local Graphical Model
+Undirected Local Graphical Model for Count data with excess zeros and overdispersion
 }
 \description{
-Zero-inflated Local Graphical Model
+Network estimation following local markov property for count data with zero inflated and overdispersion by specified node-conditional distribution
 }
 \usage{
 zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"), 
@@ -24,7 +24,7 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
   The number of regularization parameter.
   }
   \item{family}{
-  Types of node-conditional distribution to be assumed among zero-inflated distributions.
+  Types of node-conditional distribution to be assumed among zero-inflated distributions. 
   }
   \item{update_type}{
   Algorithm for estimating edge coefficients.
@@ -75,7 +75,7 @@ Zero-inflated local graphical model
   \item{v}{vector of network variability measured for each regularization level.}
   \item{opt_lambda}{The lambda that gives the optimal network.}
 }
-\references{Network analysis for Count data with excess zero}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
 \author{
 Park Beomjin, 
 }
@@ -83,7 +83,18 @@ Park Beomjin,
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \examples{
-Not yet
+require(ZILGM)
+n = 100; p = 30; prob = 2 / p;
+simul_dat = zilgm_sim(prob = prob, n = n, p = p, zlvs = 0.1, 
+					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
+
+lambda_max = find_lammax(simul_dat$X)
+lambda_min = 1e-4 * lambda_max
+lambs = exp(seq(log(lambda_max), log(lambda_min), length.out = 50))
+simul_nb2_result = zilgm(X = simul_dat$X, lambda = lambs, family = "NBII", thresh = 1e-6, EM_tol = 1e-6,
+                        EM_iter = 1000, nCores = 30, update_type = "IRLS", weights_mat = NULL, do_boot = TRUE,
+                        boot_num = 30, init_select = FALSE, beta = 0.05, sym = "OR", tol = 1e-6, maxit = 1e+3)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

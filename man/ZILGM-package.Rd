@@ -5,7 +5,7 @@
 A R Package to estimate Local Markov Network for Count data with zero-inflated and overdispersion.
 }
 \description{
-A R Package to estimate Local Markov Network for Count data with zero-inflated and overdispersion.
+Undirected graphical models to estimate Local Markov Network for Count data with zero-inflated and overdispersion.
 }
 
 \details{
@@ -24,7 +24,7 @@ Park Beomjin,
 Maintainer : Park Beomjin <bbbeomjin@gmail.com>
 }
 
-\references{Network analysis for Count data with excess zero}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 

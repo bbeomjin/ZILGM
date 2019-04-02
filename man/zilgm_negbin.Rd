@@ -1,10 +1,10 @@
 \name{zilgm_negbin}
 \alias{zilgm_negbin}
 \title{
-Neiborhood selection under the zero-inflated negative binomial distribution for Zero-inflated Local Graphical Model
+Zero-inflated negative binomial regression with \emph{l_1}-regularization
 }
 \description{
-Zero-inflated negative binomial regression with \emph{l_1}-regularization.
+Neiborhood selection under the zero-inflated negative binomial distribution by zero-inflated negative binomial regression with \emph{l_1}-regularization
 }
 \usage{
 zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
@@ -49,9 +49,6 @@ zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalt
   A logical. Whether to estimate dispersion parameter theta.
   }
 }
-\details{
-Zero-inflated local graphical model
-}
 \value{
   An S3 object with the following slots
   \item{beta}{Estimated coefficients vector.}
@@ -62,7 +59,7 @@ Zero-inflated local graphical model
   \item{loglik}{\emph{l_1}-penalized negative log-likelihood value.}
   \item{call}{The mathced call.}
 }
-\references{Network analysis for Count data with excess zero}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
 \author{
 Park Beomjin, 
 }
@@ -70,7 +67,14 @@ Park Beomjin,
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \examples{
-
+# Zero-inflated negative binomial regression with l_1 penalty
+require(ZILGM)
+n = 100; p = 30; prob = 2 / p;
+simul_dat = zilgm_sim(prob = prob, n = n, p = p, zlvs = 0.1, 
+					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
+y = simul_dat$X[, 1]
+X = simul_dat$X[, -1]
+negbin_fit = zilgm_negbin(y = y, x = X, lambda = 1, update_type = "IRLS", fixed_theta = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

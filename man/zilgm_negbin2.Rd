@@ -62,7 +62,7 @@ Zero-inflated local graphical model
   \item{loglik}{\emph{l_1}-penalized negative log-likelihood value.}
   \item{call}{The mathced call.}
 }
-\references{Network analysis for Count data with excess zero}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
 \author{
 Park Beomjin, 
 }
@@ -70,7 +70,14 @@ Park Beomjin,
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \examples{
-Not yet.
+# Zero-inflated negative binomial2 regression with l_1 penalty
+require(ZILGM)
+n = 100; p = 30; prob = 2 / p;
+simul_dat = zilgm_sim(prob = prob, n = n, p = p, zlvs = 0.1, 
+					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
+y = simul_dat$X[, 1]
+X = simul_dat$X[, -1]
+negbin2_fit = zilgm_negbin2(y = y, x = X, lambda = 1, update_type = "IRLS", fixed_sigma = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
