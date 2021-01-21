@@ -3,6 +3,45 @@
 # require(mpath)
 # require(pscl)
 
+mclapply.hack <- function(..., nCores) {
+  ## Create a cluster
+  size.of.list <- length(list(...)[[1]])
+  cl <- makeCluster(nCores)
+  ## Find out the names of the loaded packages
+  loaded.package.names <- c(
+    ## Base packages
+    sessionInfo()$basePkgs,
+    ## Additional packages
+    names( sessionInfo()$otherPkgs ))
+  tryCatch( {
+    ## Copy over all of the objects within scope to
+    ## all clusters.
+    this.env <- environment()
+    while( identical( this.env, globalenv() ) == FALSE ) {
+      clusterExport(cl,
+                    ls(all.names=TRUE, env=this.env),
+                    envir=this.env)
+      this.env <- parent.env(environment())
+    }
+    clusterExport(cl,
+                  ls(all.names=TRUE, env=globalenv()),
+                  envir=globalenv())
+
+    ## Load the libraries on all the clusters
+    ## N.B. length(cl) returns the number of clusters
+    parLapply( cl, 1:length(cl), function(xx){
+      lapply(loaded.package.names, function(yy) {
+        require(yy , character.only=TRUE)})
+    })
+
+    ## Run the lapply in parallel
+    return( parLapply( cl, ...) )
+  }, finally = {
+    ## Stop the cluster
+    stopCluster(cl)
+  })
+}
+
 zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"),
                 sym = c("AND", "OR"), thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL,
                 do_boot = FALSE, boot_num = 10, beta = 0.05, lambda_min_ratio = 1e-4,
@@ -141,10 +180,11 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
   if (any(weights_mat < 0)) {"The elements in weights_mat must have non-negative values"}
   if ((NROW(weights_mat) != n) | (NCOL(weights_mat) != p)) {"The number of elements in weights_mat not equal to the number of rows and columns on X"}
 
-  coef_tmp = mclapply(1:p, FUN = function(j) {zigm_wrapper(jth = j, X = X, lambda = lambda, family = family, update_type = update_type,
-                                                           thresh = thresh, weights = weights_mat[, j], penalty.factor = penalty_mat[, j],
-                                                           init_select = init_select, fun = coord_fun, n, p, nlambda, ...)},
-                      mc.cores = nCores, mc.preschedule = FALSE)
+  coef_tmp = mclapply.hack(1:p, fun = function(j) {
+    zigm_wrapper(jth = j, X = X, lambda = lambda, family = family, update_type = update_type,
+                 thresh = thresh, weights = weights_mat[, j], penalty.factor = penalty_mat[, j],
+                 init_select = init_select, fun = coord_fun, n, p, nlambda)}, nCores = nCores)
+
 
   for (j in 1:p) {
     coef_mat[, j, ] = as.matrix(coef_tmp[[j]]$Bmat)
