@@ -166,11 +166,17 @@ pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL,
                            start = bvec0, mustart = mu0, etastart = eta0, standardize = FALSE, penalty = "enet",
                            x.keep = FALSE, y.keep = FALSE, trace = FALSE)), silent = TRUE)
   if (inherits(negbin_fit, "try-error")) {
-    negbin_fit = irls_nb(y = y, x = x, weights = weights, lambda = lambda, theta0 = theta0,
-                          thresh = thresh, maxit = maxit, penalty.factor = penalty.factor, eta0 = eta0, mu0 = mu0)
-    bvec = negbin_fit$bvec
-    eta = negbin_fit$eta
-    mu = negbin_fit$mu
+    negbin_fit = try((irls_nb(y = y, x = x, weights = weights, lambda = lambda, theta0 = theta0,
+                          thresh = thresh, maxit = maxit, penalty.factor = penalty.factor, eta0 = eta0, mu0 = mu0)), silent = TRUE)
+    if (inherits(negbin_fit, "try-error")) {
+      bvec = rep(0, ncol(x) + 1)
+      mu = rep(1e-8, length(y))
+      eta = log(mu)
+    } else {
+      bvec = negbin_fit$bvec
+      eta = negbin_fit$eta
+      mu = negbin_fit$mu
+    }
   } else {
     bvec = drop(c(negbin_fit$b0, negbin_fit$beta))
     mu = negbin_fit$fitted.values

@@ -87,7 +87,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
 
     tmp_net = zigm_network(X = X, lambda = tmp_lams, family = family, update_type = update_type, sym = sym,
                            thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
-                           init_select = init_select, nCores = nCores, n, p, ...)
+                           init_select = init_select, nCores = nCores, n = n, p = p, ...)
 
     nOfEdge = unlist(lapply(tmp_net$hat_net, function(x) sum(x != 0)))
     s_lam = tmp_lams[which.max(nOfEdge > 1)]
@@ -122,7 +122,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
 
       boot_net = zigm_network(X = X[sub_ind, , drop = FALSE], lambda = lambda, family = family, update_type = update_type,
                               sym = sym, thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
-                              init_select = init_select, nCores = nCores, m, p, ...)
+                              init_select = init_select, nCores = nCores, n = m, p = p, ...)
 
       for (l in 1:nlambda) {
         boot_tmp[[l]] = boot_tmp[[l]] + boot_net$hat_net[[l]]
@@ -136,7 +136,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
       v[l] = mean(gv_tmp[upper.tri(gv_tmp)])
     }
     rm(boot_tmp); gc();
-
+    v = round(v, 3)
     opt_index = max(which.max(v >= beta)[1] - 1, 1)
     opt_lambda = lambda[opt_index]
 
@@ -180,10 +180,10 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
   if (any(weights_mat < 0)) {"The elements in weights_mat must have non-negative values"}
   if ((NROW(weights_mat) != n) | (NCOL(weights_mat) != p)) {"The number of elements in weights_mat not equal to the number of rows and columns on X"}
 
-  coef_tmp = mclapply.hack(1:p, fun = function(j) {
+  coef_tmp = mclapply.hack(X = 1:p, fun = function(j) {
     zigm_wrapper(jth = j, X = X, lambda = lambda, family = family, update_type = update_type,
                  thresh = thresh, weights = weights_mat[, j], penalty.factor = penalty_mat[, j],
-                 init_select = init_select, fun = coord_fun, n, p, nlambda)}, nCores = nCores)
+                 init_select = init_select, fun = coord_fun, n = n, p = p, nlambda = nlambda)}, nCores = nCores)
 
 
   for (j in 1:p) {

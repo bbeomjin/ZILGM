@@ -22,16 +22,18 @@ generate_network_structure = function(node, prob = 0.01, NofHub = 3, type = c("s
   }
 
   if (type == "scale-free") {
-    graph = sample_pa(node, power = 1, directed = FALSE)
+    graph = sample_pa(2 * node / 3, power = 1, directed = FALSE)
     adj_mat = as_adjacency_matrix(graph)
-    networkmat = as.matrix(adj_mat)
+    networkmat = rbind(cbind(as.matrix(adj_mat), 
+                       matrix(0, nrow = nrow(adj_mat), ncol = node / 3)),
+                       matrix(0, nrow = node / 3, ncol = node))
     return(networkmat)
   }
 
   if (type == "hub") {
     graph = matrix(0, nrow = node, ncol = node)
     ind = sample(1:ncol(graph), NofHub)
-    group = sample(1:NofHub, ncol(graph), replace = TRUE, prob = rep(1, NofHub) / NofHub)
+    group = c(sample(1:NofHub, node - 10, replace = TRUE, prob = rep(1, NofHub) / NofHub), rep(NofHub + 1, 10))
     for (i in 1:length(ind)) {
       graph[ind[i], group == i] = 1
       graph[group == i, ind[i]] = 1
@@ -42,6 +44,52 @@ generate_network_structure = function(node, prob = 0.01, NofHub = 3, type = c("s
   }
 }
 
+generate_network_structure2 = function(node, prob = 0.01, NofHub = 3, type = c("scale-free", "hub", "random")) {
+  type = match.arg(type)
+  if (type == "random") {
+    # Generate matrix values, sampling 0 or 1 with given probabilities
+    matvals = sample(c(0, 1), node * (node - 1)/2,
+                     replace = TRUE, prob = c(1 - prob, prob))
+    
+    # From the values above, generate a symmetric matrix
+    networkmat = matrix(rep(0, node * node), ncol = node)
+    mv = 1
+    for (i in 1:node) {
+      for (j in 1:node) {
+        if (i > j) {
+          networkmat[i, j] = networkmat[j, i] = matvals[mv]
+          mv = mv + 1
+        }
+      }
+    }
+    return(networkmat)
+  }
+  
+  if (type == "scale-free") {
+    n_node = floor(2 * node / 3)
+    graph = sample_pa(n_node, power = 1, directed = FALSE)
+    adj_mat = as.matrix(as_adjacency_matrix(graph))
+    random_graph = generate_random_network(node - n_node, prob = prob)
+    networkmat = rbind(cbind(as.matrix(adj_mat),
+                             matrix(0, nrow = nrow(adj_mat), ncol = node - n_node)),
+                       matrix(0, nrow = node - n_node, ncol = node))
+    networkmat[(n_node + 1):ncol(networkmat), (n_node + 1):ncol(networkmat)] = random_graph
+    return(networkmat)
+  }
+  
+  if (type == "hub") {
+    graph = matrix(0, nrow = node, ncol = node)
+    ind = sample(1:ncol(graph), NofHub)
+    group = c(sample(1:NofHub, node - 10, replace = TRUE, prob = rep(1, NofHub) / NofHub), rep(NofHub + 1, 10))
+    for (i in 1:length(ind)) {
+      graph[ind[i], group == i] = 1
+      graph[group == i, ind[i]] = 1
+    }
+    graph[ind, ind] = 0
+    networkmat = graph
+    return(networkmat)
+  }
+}
 
 
 generate_random_network = function(node, prob) {
