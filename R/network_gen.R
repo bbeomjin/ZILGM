@@ -24,7 +24,7 @@ generate_network = function(node, prob = 0.01, NofHub = 3, type = c("scale-free"
 	g_node = floor(2 * node / 3)
     graph = matrix(0, nrow = g_node, ncol = g_node)
     ind = sample(1:ncol(graph), NofHub)
-    group = c(sample(1:NofHub, g_node, replace = TRUE, prob = rep(1, NofHub) / NofHub)))
+    group = c(sample(1:NofHub, g_node, replace = TRUE, prob = rep(1, NofHub) / NofHub))
     for (i in 1:length(ind)) {
       graph[ind[i], group == i] = 1
       graph[group == i, ind[i]] = 1
