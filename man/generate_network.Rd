@@ -5,7 +5,7 @@
 Generate graph structure
 }
 \description{
-Generate graph structure
+Generate graph structure.
 }
 \usage{
 generate_network(p, prob, NofHub = 3, type = c("scale-free", "hub", "random"))
@@ -29,11 +29,11 @@ generate_network(p, prob, NofHub = 3, type = c("scale-free", "hub", "random"))
 A \emph{p} x \emph{p} adjacency matrix
 }
 
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \\
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. 
             Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
 
 \author{
-Beomjin Park,
+Beomjin, Park.
 }
 
 \seealso{
@@ -41,6 +41,7 @@ Beomjin Park,
 }
 \examples{
 require(ZILGM)
+set.seed(1)
 n = 100; p = 30; prob = 2 / p;
 
 # Random graph
