@@ -1,4 +1,4 @@
-export(zilgm, zilgm_poisson, zilgm_negbin, zilgm_negbin2, generate_random_network, zilgm_sim, find_lammax)
+export(zilgm, zilgm_poisson, zilgm_negbin, zilgm_negbin2, generate_network, zilgm_sim, find_lammax)
 exportClasses("zilgm")
 
 import("methods")
@@ -11,3 +11,4 @@ importFrom("MASS", "negative.binomial")
 importFrom("glmnet", "glmnet")
 importFrom("Matrix", "Matrix")
 importFrom("mpath", "glmreg")
+importFrom("graph", "sample_pa")

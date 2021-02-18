@@ -13,25 +13,27 @@ Compute the maximum \code{lambda} from Karush-Kuhn-Tucker condition
   A \emph{n} x \emph{p} data matrix.
 }
 }
-\details{
-Zero-inflated local graphical model
-}
+%\details{
+%Zero-inflated local graphical model
+%}
 \value{
   a numeric value
 }
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \\
+			Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
 \author{
-Park Beomjin, 
+Beomjin, Park. 
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \examples{
 require(ZILGM)
-n = 100; p = 30; prob = 2 / p;
-A = generate_random_network(p, prob)
+set.seed(1)
+n = 100; p = 10; prob = 2 / p;
+A = generate_network(p, prob, type = "random")
 simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
-					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
+					  family = "negbin", signal = 1, theta = 0.5, noise = 0.0)
 find_lammax(simul_dat$X)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

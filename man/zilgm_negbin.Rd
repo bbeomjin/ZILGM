@@ -1,19 +1,19 @@
 \name{zilgm_negbin}
 \alias{zilgm_negbin}
 \title{
-Zero-inflated negative binomial regression with \emph{l_1}-regularization
+Neiborhood selection under the zero-inflated negative binomial I distribution for Zero-inflated Local Graphical Model
 }
 \description{
-Neiborhood selection under the zero-inflated negative binomial distribution by zero-inflated negative binomial regression with \emph{l_1}-regularization
+Neiborhood selection under the zero-inflated negative binomial distribution I by zero-inflated negative binomial regression with \emph{l_1}-regularization.
 }
 \usage{
 zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-              thresh = 1e-6, EM_tol = 1e-6, EM_iter = 500, tol = 1e-6, maxit = 1e+3, fixed_theta = FALSE)
+              thresh = 1e-6, EM_tol = 1e-5, EM_iter = 300, tol = 1e-6, maxit = 3e+2, fixed_theta = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{y}{
-  A response \emph{y}.
+  A numeric vector. A response variable \emph{y}.
 }
   \item{x}{
   A design matrix \emph{x}.
@@ -22,13 +22,13 @@ zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalt
   A regularization parameter to control a level of \emph{l_1}-penalty.
   }
   \item{weights}{
-  Weights vector for observations
+  Weights vector for observations. A default value for each observation is 1.
   }
   \item{update_type}{
-  Algorithm for estimating coefficients
+  Types of algorithm for estimating coefficients.
   }
   \item{penalty.factor}{
-  Weights vector for coefficients of each variable.
+  Weights vector for coefficients of each variable. A default value for each variable is 1. 
   }
   \item{thresh}{
   Threshold value for the estimated coefficients.
@@ -37,13 +37,13 @@ zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalt
   Convergence tolerance for EM algorithm.
   }
   \item{EM_iter}{
-  Maximum number of EM algorithm iterations.
+  A integer value. Maximum number of EM algorithm iterations.
   }
   \item{tol}{
-  Convergence tolerance for coordinate descent.
+  Convergence tolerance for coordinate descent algorithm.
   }
   \item{maxit}{
-  Maximum number of coordinate descent iterations.
+  A integer value. Maximum number of coordinate descent iterations.
   }
   \item{fixed_theta}{
   A logical. Whether to estimate dispersion parameter theta.
@@ -57,22 +57,23 @@ zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalt
   \item{pos_zero}{Indices of zero values.}
   \item{iteration}{Iteration numbers until convergence.}
   \item{loglik}{\emph{l_1}-penalized negative log-likelihood value.}
-  \item{call}{The mathced call.}
+  \item{call}{The matched call.}
 }
 \references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
 \author{
-Park Beomjin, 
+Beomjin, Park. 
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \examples{
-# Zero-inflated negative binomial regression with l_1 penalty
+# Zero-inflated negative binomial I regression with l_1 penalty
 require(ZILGM)
-n = 100; p = 30; prob = 2 / p;
-A = generate_random_network(p, prob)
+set.seed(1)
+n = 100; p = 10; prob = 2 / p;
+A = generate_network(p, prob, type = "random")
 simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
-					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
+					  family = "negbin", signal = 1, theta = 0.5, noise = 0.0)
 y = simul_dat$X[, 1]
 X = simul_dat$X[, -1]
 negbin_fit = zilgm_negbin(y = y, x = X, lambda = 1, update_type = "IRLS", fixed_theta = FALSE)

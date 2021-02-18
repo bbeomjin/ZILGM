@@ -4,7 +4,7 @@
 Neiborhood selection under the zero-inflated Poisson distribution for Zero-inflated Local Graphical Model
 }
 \description{
-Zero-inflated Poisson regression with \emph{l_1}-regularization.
+Neiborhood selection under the zero-inflated Poisson distribution I by zero-inflated Poisson regression with \emph{l_1}-regularization.
 }
 \usage{
 zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
@@ -13,7 +13,7 @@ zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penal
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{y}{
-  A response \emph{y}.
+  A numeric vector. A response variable \emph{y}.
 }
   \item{x}{
   A design matrix \emph{x}.
@@ -22,13 +22,13 @@ zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penal
   A regularization parameter to control a level of \emph{l_1}-penalty.
   }
   \item{weights}{
-  Weights vector for observations
+  Weights vector for observations. A default value for each observation is 1.
   }
   \item{update_type}{
-  Algorithm for estimating coefficients
+  Types of algorithm for estimating coefficients.
   }
   \item{penalty.factor}{
-  Weights vector for coefficients of each variable.
+  Weights vector for coefficients of each variable. A default value for each variable is 1. 
   }
   \item{thresh}{
   Threshold value for the estimated coefficients.
@@ -37,13 +37,13 @@ zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penal
   Convergence tolerance for EM algorithm.
   }
   \item{EM_iter}{
-  Maximum number of EM algorithm iterations.
+  A integer value. Maximum number of EM algorithm iterations.
   }
   \item{tol}{
   Convergence tolerance for coordinate descent.
   }
   \item{maxit}{
-  Maximum number of coordinate descent iterations.
+  A integer value. Maximum number of coordinate descent iterations.
   }
 }
 \details{
@@ -57,11 +57,11 @@ Zero-inflated local graphical model
   \item{iteration}{Iteration numbers until convergence.}
   \item{loglik}{\emph{l_1}-penalized negative log-likelihood value.}
   \item{z}{Estimated latent variable.}
-  \item{call}{The mathced call.}
+  \item{call}{The matched call.}
 }
 \references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
 \author{
-Park Beomjin, 
+Beomjin, Park. 
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
@@ -69,14 +69,14 @@ Park Beomjin,
 \examples{
 # Zero-inflated Poissn regression with l_1 penalty
 require(ZILGM)
-n = 100; p = 30; prob = 2 / p;
-A = generate_random_network(p, prob)
+set.seed(1)
+n = 100; p = 10; prob = 2 / p;
+A = generate_network(p, prob, type = "random")
 simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
-					  family = "negbin", signal = 1.5, theta = 1, noise = 0.1)
+					  family = "negbin", signal = 1, theta = 0.5, noise = 0.0)
 y = simul_dat$X[, 1]
 X = simul_dat$X[, -1]
 poisson_fit = zilgm_poisson(y = y, x = X, lambda = 1, update_type = "IRLS")
-
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
