@@ -18,10 +18,10 @@ generate_network(p, prob, NofHub = 3, type = c("scale-free", "hub", "random"))
   \item{prob}{
   The probability that the edges of the random graph appear.
   }
-  \item{NofHub} {  
+  \item{NofHub}{  
   The number of hub nodes in hub graph.
   }
-  \item{type} {
+  \item{type}{
   Types of graph structure. Either a character string representing one of the graph structures.
   }
 }
@@ -29,7 +29,7 @@ generate_network(p, prob, NofHub = 3, type = c("scale-free", "hub", "random"))
 A \emph{p} x \emph{p} adjacency matrix
 }
 
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. 
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \\
             Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
 
 \author{
