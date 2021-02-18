@@ -1,5 +1,5 @@
-\name{zilgm_sim}
-\alias{zilgm_sim}
+\name{generate_network}
+\alias{generate_network}
 
 \title{
 Generate graph structure
