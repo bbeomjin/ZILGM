@@ -1,11 +1,13 @@
 Package: ZILGM
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Implementations of Local Markov random fields for count data with zero-inflation and overdispersion
+Depends: R (>= 3.0.0)
+Imports: methods, stats, parallel, Matrix, MASS, flux, glmnet, igraph, network, mpath
+Version: 0.1.1
+Authors@R: c(person("Beomjin", "Park", role = c("aut", "cre"), email = "bbbeomjin@gmail"))
+Author: Beomjin Park [aut, cre]
+        Hosik Choi [aut]
+		Changyi Park [aut]
+Maintainer: Beomjin Park <bbbeomjin@gmail.com>
+License: GPL-2
 Encoding: UTF-8
-LazyData: true

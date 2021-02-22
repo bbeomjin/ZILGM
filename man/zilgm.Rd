@@ -7,10 +7,10 @@ Undirected Local Graphical Models for Count data with excess zeros and overdispe
 Network estimation following local markov property for count data with zero inflated and overdispersion by specified node-conditional distribution
 }
 \usage{
-zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"), 
-                sym = c("AND", "OR"), thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL,
-                do_boot = FALSE, boot_num = 10, beta = 0.05, lambda_min_ratio = 1e-4,
-                init_select = FALSE, nCores = 1, ...)
+zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), 
+      update_type = c("IRLS", "MM"), sym = c("AND", "OR"), thresh = 1e-6, 
+	  weights_mat = NULL, penalty_mat = NULL, do_boot = FALSE, boot_num = 10,
+	  beta = 0.05, lambda_min_ratio = 1e-4, init_select = FALSE, nCores = 1, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -61,12 +61,10 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
   The number of cores to use for parallel computing.
   }
   \item{...}{
-  Other arguments that can be passed to neighborhood selection function(\code{zilgm_poisson, zilgm_negbin, and zilgm_negbin2})
+  Other arguments that can be passed to neighborhood selection function.
   }
 }
-%\details{
-%Zero-inflated local graphical model
-%}
+
 \value{
   An S3 object with the following slots
   \item{network}{a list of \emph{p} x \emph{p} matrices of estimated networks along the regularization path.}
@@ -75,11 +73,11 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
   \item{v}{vector of network variability measured for each regularization level.}
   \item{opt_lambda}{The lambda that gives the optimal network.}
 }
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \cr
-			Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
-\author{
-Beomjin, Park. 
-}
+
+\references{Choi, H., J. Gim, S. Won, Y. J. Kim, S. Kwon, and C. Park, 2017: Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}, no. 1, 1-10. \cr
+			Park, B., H. Choi, C. Park, 2021: Negative binomial graphical model with excess zeros.}
+
+
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
@@ -89,18 +87,21 @@ set.seed(1)
 n = 100; p = 10; prob = 2 / p;
 A = generate_network(p, prob, type = "random")
 simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
-					  family = "negbin", signal = 1, theta = 0.5, noise = 0.0)
+					  family = "negbin", signal = 1.5, theta = 0.5, noise = 0.0)
 					  
 # Compute a sequence of regularization parameter
 lambda_max = find_lammax(simul_dat$X)
 lambda_min = 1e-4 * lambda_max
 lambs = exp(seq(log(lambda_max), log(lambda_min), length.out = 50))
-nb2_fit = zilgm(X = simul_dat$X, lambda = lambs, family = "NBII", update_type = "IRLS", do_boot = TRUE,
-                        boot_num = 30, sym = "OR")
+nb2_fit = zilgm(X = simul_dat$X, lambda = lambs, family = "NBII", update_type = "IRLS", 
+                do_boot = TRUE, boot_num = 30, sym = "OR")
 
 # To compute the regularization parameters automatically, use the argument nlambda
-nb2_fit = zilgm(X = simul_dat$X, nlambda = 50, family = "NBII", update_type = "IRLS", do_boot = TRUE,
-                        boot_num = 30, sym = "OR")
+nb2_fit = zilgm(X = simul_dat$X, nlambda = 50, family = "NBII", update_type = "IRLS",
+                do_boot = TRUE, boot_num = 30, sym = "OR")
+				
+# Get estimated graph
+est_graph = nb2_fit$network[[nb2_fit$opt_index]]
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

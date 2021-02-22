@@ -29,12 +29,10 @@ generate_network(p, prob, NofHub = 3, type = c("scale-free", "hub", "random"))
 A \emph{p} x \emph{p} adjacency matrix
 }
 
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \cr
-            Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
+\references{Choi, H., J. Gim, S. Won, Y. J. Kim, S. Kwon, and C. Park, 2017: Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}, no. 1, 1-10. \cr
+			Park, B., H. Choi, C. Park, 2021: Negative binomial graphical model with excess zeros.}
 
-\author{
-Beomjin, Park.
-}
+
 
 \seealso{
 \link{zilgm}
@@ -42,7 +40,7 @@ Beomjin, Park.
 \examples{
 require(ZILGM)
 set.seed(1)
-n = 100; p = 30; prob = 2 / p;
+p = 30; prob = 2 / p;
 
 # Random graph
 random_graph = generate_network(p, prob, type = "random")

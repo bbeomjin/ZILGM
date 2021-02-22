@@ -7,8 +7,9 @@ Neiborhood selection under the zero-inflated Poisson distribution for Zero-infla
 Neiborhood selection under the zero-inflated Poisson distribution I by zero-inflated Poisson regression with \emph{l_1}-regularization.
 }
 \usage{
-zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-              thresh = 1e-6, EM_tol = 1e-6, EM_iter = 500, tol = 1e-6, maxit = 1e+3)
+zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"),
+              penalty.factor = NULL, thresh = 1e-6, EM_tol = 1e-6, EM_iter = 500,
+ 			  tol = 1e-6, maxit = 1e+3)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -46,9 +47,7 @@ zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penal
   A integer value. Maximum number of coordinate descent iterations.
   }
 }
-\details{
-Zero-inflated local graphical model
-}
+
 \value{
   An S3 object with the following slots
   \item{beta}{Estimated coefficients vector.}
@@ -59,10 +58,11 @@ Zero-inflated local graphical model
   \item{z}{Estimated latent variable.}
   \item{call}{The matched call.}
 }
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
-\author{
-Beomjin, Park. 
-}
+
+\references{Wang, Z., S. Ma, M. Zappitelli, C. Parikh, C.-Y. Wang, and P. Devarajan, 2016: Penalized count data regression with application to hospital stay after pediatric cardiac surgery. \emph{Stat. Methods Med. Res.}, \bold{25}, no.6, 2685-2703. \cr
+			Choi, H., J. Gim, S. Won, Y. J. Kim, S. Kwon, and C. Park, 2017: Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}, no. 1, 1-10. \cr
+			Park, B., H. Choi, C. Park, 2021: Negative binomial graphical model with excess zeros.}
+
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
@@ -73,7 +73,7 @@ set.seed(1)
 n = 100; p = 10; prob = 2 / p;
 A = generate_network(p, prob, type = "random")
 simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
-					  family = "negbin", signal = 1, theta = 0.5, noise = 0.0)
+					  family = "negbin", signal = 1.5, theta = 0.5, noise = 0.0)
 y = simul_dat$X[, 1]
 X = simul_dat$X[, -1]
 poisson_fit = zilgm_poisson(y = y, x = X, lambda = 1, update_type = "IRLS")

@@ -12,20 +12,21 @@ Undirected graphical models to estimate Local Markov Network for Count data with
 \tabular{rl}{
 Package: \tab ZILGM\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
+Version: \tab 0.1.1\cr
 Date: \tab 2021-02-22\cr
 License: \tab GPL-2\cr
 }
 }
 
 \author{
-Beomjin, Park.
+Beomjin Park
 
-Maintainer : Beomjin, Park. <bbbeomjin@gmail.com>
+Maintainer : Beomjin Park <bbbeomjin@gmail.com>
 }
 
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \cr
-			Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
+\references{Choi, H., J. Gim, S. Won, Y. J. Kim, S. Kwon, and C. Park, 2017: Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}, no. 1, 1-10. \cr
+			Park, B., H. Choi, C. Park, 2021: Negative binomial graphical model with excess zeros.}
+
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
