@@ -2,10 +2,10 @@
 \alias{ZILGM-package}
 \docType{package}
 \title{
-A R Package to estimate Local Markov Network for Count data with zero-inflated and overdispersion.
+A R Package to estimate Local Markov Network for Count data with zero-inflation and overdispersion.
 }
 \description{
-Undirected graphical models to estimate Local Markov Network for Count data with zero-inflated and overdispersion.
+Undirected graphical models to estimate Local Markov Network for Count data with zero-inflation and overdispersion.
 }
 
 \details{
@@ -13,18 +13,19 @@ Undirected graphical models to estimate Local Markov Network for Count data with
 Package: \tab ZILGM\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
-Date: \tab 2019-03-25\cr
+Date: \tab 2021-02-22\cr
 License: \tab GPL-2\cr
 }
 }
 
 \author{
-Park Beomjin, 
+Beomjin, Park.
 
-Maintainer : Park Beomjin <bbbeomjin@gmail.com>
+Maintainer : Beomjin, Park. <bbbeomjin@gmail.com>
 }
 
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \cr
+			Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 

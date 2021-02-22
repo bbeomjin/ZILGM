@@ -19,7 +19,7 @@ Compute the maximum \code{lambda} from Karush-Kuhn-Tucker condition
 \value{
   a numeric value
 }
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \\
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \cr
 			Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
 \author{
 Beomjin, Park. 

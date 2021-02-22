@@ -75,7 +75,7 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), upda
   \item{v}{vector of network variability measured for each regularization level.}
   \item{opt_lambda}{The lambda that gives the optimal network.}
 }
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \\
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \cr
 			Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
 \author{
 Beomjin, Park. 

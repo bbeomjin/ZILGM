@@ -59,7 +59,8 @@ zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalt
   \item{loglik}{\emph{l_1}-penalized negative log-likelihood value.}
   \item{call}{The matched call.}
 }
-\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93.}
+\references{Choi, H., Gim, J., Won, S., Kim, Y. J., Kwon, S., and Park, C. (2017). Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}(1), 93. \cr
+            Park, B., Choi, H., Park, C. (2021). Negative binomial graphical model with excess zeros.}
 \author{
 Beomjin, Park. 
 }
