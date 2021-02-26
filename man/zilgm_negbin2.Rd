@@ -8,7 +8,7 @@ Neiborhood selection under the zero-inflated negative binomial distribution II b
 }
 \usage{
 zilgm_negbin2(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"),
-              penalty.factor = NULL, thresh = 1e-6, EM_tol = 1e-5, EM_iter = 300,
+              penalty.factor = NULL, thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2,
 			  tol = 1e-6, maxit = 3e+2, fixed_sigma = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.

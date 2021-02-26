@@ -1,6 +1,6 @@
 
 zilgm_negbin2 = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-                        fixed_sigma = FALSE, tol = 1e-6, EM_tol = 1e-6, EM_iter = 300, thresh = 1e-6, maxit = 1e+3)
+                        fixed_sigma = FALSE, tol = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, thresh = 1e-6, maxit = 3e+2)
 {
   update_type = match.arg(update_type)
   fun_call = match.call()

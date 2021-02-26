@@ -8,8 +8,8 @@ Neiborhood selection under the zero-inflated Poisson distribution I by zero-infl
 }
 \usage{
 zilgm_poisson(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"),
-              penalty.factor = NULL, thresh = 1e-6, EM_tol = 1e-6, EM_iter = 500,
- 			  tol = 1e-6, maxit = 1e+3)
+              penalty.factor = NULL, thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2,
+ 			  tol = 1e-6, maxit = 3e+2)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

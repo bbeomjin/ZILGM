@@ -189,7 +189,7 @@ pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL,
 
 
 zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-                        thresh = 1e-6, EM_tol = 1e-6, EM_iter = 300, tol = 1e-6, maxit = 1e+3, fixed_theta = FALSE)
+                        thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, tol = 1e-6, maxit = 3e+2, fixed_theta = FALSE)
 {
   update_type = match.arg(update_type)
   fun_call = match.call()

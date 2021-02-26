@@ -22,6 +22,7 @@ generate_network = function(node, prob = 0.01, NofHub = 3, type = c("scale-free"
   
   if (type == "hub") {
 	g_node = floor(2 * node / 3)
+	n_node = node - g_node
     graph = matrix(0, nrow = g_node, ncol = g_node)
     ind = sample(1:ncol(graph), NofHub)
     group = c(sample(1:NofHub, g_node, replace = TRUE, prob = rep(1, NofHub) / NofHub))
