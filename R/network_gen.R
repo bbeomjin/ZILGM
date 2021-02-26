@@ -32,6 +32,7 @@ generate_network = function(node, prob = 0.01, NofHub = 3, type = c("scale-free"
     }
     graph[ind, ind] = 0
 	adj_mat = graph
+	random_graph = generate_random_network(n_node, prob = prob)
 	networkmat = rbind(cbind(as.matrix(adj_mat),
                              matrix(0, nrow = nrow(adj_mat), ncol = n_node)),
                        matrix(0, nrow = n_node, ncol = node))
