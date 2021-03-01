@@ -4,19 +4,20 @@ zilgm_negbin2 = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "
 {
   update_type = match.arg(update_type)
   fun_call = match.call()
-  
+  out = list()
+   
+  n = NROW(x)
+  p = NCOL(x)
+ 
   if ((p == 1) & (update_type == "MM")) {update_type = "onecol_MM"}
   if ((p == 1) & (update_type == "IRLS")) {update_type = "onecol_IRLS"}
   
-  out = list()
   update_fun = switch(update_type,
                       onecol_MM = wlasso_p,
                       onecol_irls = glm_p,
                       MM = pglm_p_mm,
                       IRLS = pglm_p_irls)
-  
-  n = NROW(x)
-  p = NCOL(x)
+					  
   pos_zero = (y == 0)
   pos_nzero = !pos_zero
   z = rep(1e-6, n)
