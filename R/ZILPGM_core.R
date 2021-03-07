@@ -260,7 +260,7 @@ zilgm_poisson = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "
 
       erisk = p_objective(y = y, weights = weights, prob = prob, bvec = bvec, mu = mu, lambda = lambda,
                           penalty.factor = penalty.factor, posz = pos_zero)
-
+      if (is.infinite(erisk) | is.nan(erisk)) {erisk = 1e+8}
 
       if ((abs((erisk_prev - erisk) / (erisk_prev + 1)) < EM_tol)) {
         bvec = bvec
