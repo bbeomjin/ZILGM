@@ -91,7 +91,7 @@ irls_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL
       eta = ifelse(eta > log(1e+4), log(1e+4), eta)
       mu = exp(eta)
 	}
-
+    mu = ifelse(mu < 1e-6, 1e-6, mu)
     obj = nb_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda, penalty.factor = penalty.factor, theta = theta0)
     if (is.nan(obj) | is.infinite(obj)) {obj = obj_prev}
     if (abs((obj_prev - obj) / obj_prev) < thresh) {
