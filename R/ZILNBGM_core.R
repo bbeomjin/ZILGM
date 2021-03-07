@@ -161,7 +161,7 @@ pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL,
                    lambda, penalty.factor = rep(1, NCOL(x)), thresh = 1e-6, maxit = 1e+3, n = NROW(x), p = NCOL(x))
 {
   fun_call = match.call()
-  negbin_fit = try((glmreg(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, theta = theta0, 
+  negbin_fit = try((glmreg(y = y, x = x, weights = weights, lambda = lambda, alpha = 1, theta = theta0,
                            family = "negbin", thresh = thresh, maxit = maxit, penalty.factor = penalty.factor,
                            start = bvec0, mustart = mu0, etastart = eta0, standardize = FALSE, penalty = "enet",
                            x.keep = FALSE, y.keep = FALSE, trace = FALSE)), silent = TRUE)
@@ -189,15 +189,15 @@ pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL,
 
 
 zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-                        thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, tol = 1e-6, maxit = 3e+2, fixed_theta = FALSE)
+                        thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, tol = 1e-6, maxit = 3e+2, init_theta = NULL)
 {
   update_type = match.arg(update_type)
   fun_call = match.call()
   out = list()
-  
+
   n = NROW(x)
   p = NCOL(x)
-  
+
   if ((p == 1) & (update_type == "MM")) {update_type = "onecol_MM"}
   if ((p == 1) & (update_type == "IRLS")) {update_type = "onecol_IRLS"}
 
@@ -206,7 +206,7 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
                       onecol_irls = glm_nb,
                       MM = pglm_nb_mm,
                       IRLS = pglm_nb_irls)
-  
+
   pos_zero = (y == 0)
   pos_nzero = !pos_zero
   z = rep(1e-6, n)
@@ -230,7 +230,12 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
   eta0 = log(mu0)
   bvec0 = c(eta0[1], rep(0, p))
 
-  theta0 = 1e+8
+  if (is.null(init_theta)) {
+    theta0 = 1e+8
+  } else {
+    theta0 = init_theta
+  }
+
   prob0 = (sum(pos_zero) - sum(dNBI(0, mu = mu0, theta = theta0, log = FALSE))) / n
   prob0 = ifelse(prob0 < 1e-10, 1e-10, ifelse(prob0 > 1, 1, prob0))
 
@@ -248,8 +253,8 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
       mu = sol_bvec$mu
       theta = sol_bvec$theta
 
-      if (fixed_theta) {
-        theta = theta0
+      if (!is.null(init_theta)) {
+        theta = init_theta
       } else {
         theta = theta_ml(y = y, mu = mu, weights = weights)
       }
@@ -298,8 +303,8 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
       eta = sol_bvec$eta
       mu = sol_bvec$mu
 
-      if (fixed_theta) {
-        theta = theta0
+      if (!is.null(init_theta)) {
+        theta = init_theta
       } else {
         theta = theta_ml(y = y, mu = mu0, weights = weights * (1 - z))
       }

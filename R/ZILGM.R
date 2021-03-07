@@ -4,7 +4,7 @@
 # require(pscl)
 
 zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"),
-                sym = c("AND", "OR"), thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL,
+                sym = c("AND", "OR"), theta = NULL, thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL,
                 do_boot = FALSE, boot_num = 10, beta = 0.05, lambda_min_ratio = 1e-4,
                 init_select = FALSE, nCores = 1, ...)
 {
@@ -46,7 +46,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
     rho_min = lambda_min_ratio * rho_max
     tmp_lams = c(exp(seq(log(rho_max),log(rho_min), length = 15)))
 
-    tmp_net = zigm_network(X = X, lambda = tmp_lams, family = family, update_type = update_type, sym = sym,
+    tmp_net = zigm_network(X = X, lambda = tmp_lams, family = family, update_type = update_type, sym = sym, theta = theta,
                            thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
                            init_select = init_select, nCores = nCores, n = n, p = p, ...)
 
@@ -82,7 +82,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
       sub_ind = sample(1:n, m, replace = FALSE)
 
       boot_net = zigm_network(X = X[sub_ind, , drop = FALSE], lambda = lambda, family = family, update_type = update_type,
-                              sym = sym, thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
+                              sym = sym, theta = theta, thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
                               init_select = init_select, nCores = nCores, n = m, p = p, ...)
 
       for (l in 1:nlambda) {
@@ -107,7 +107,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
   }
 
   net = zigm_network(X = X, lambda = lambda, family = family, update_type = update_type,
-                     sym = sym, thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
+                     sym = sym, theta = theta, thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
                      init_select = init_select, nCores = nCores, n = n, p = p, ...)
 
   out$network = net$hat_net
@@ -119,7 +119,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
 
 
 
-zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"), sym = c("AND", "OR"),
+zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"), sym = c("AND", "OR"), theta = NULL,
                         thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL, init_select = FALSE, nCores = 1, n, p, ...)
 {
   family = match.arg(family)
@@ -141,7 +141,7 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
   if (any(weights_mat < 0)) {"The elements in weights_mat must have non-negative values"}
   if ((NROW(weights_mat) != n) | (NCOL(weights_mat) != p)) {"The number of elements in weights_mat not equal to the number of rows and columns on X"}
 
-  coef_tmp = mclapply(1:p, FUN = function(j) {zigm_wrapper(jth = j, X = X, lambda = lambda, family = family, update_type = update_type,
+  coef_tmp = mclapply(1:p, FUN = function(j) {zigm_wrapper(jth = j, X = X, lambda = lambda, family = family, update_type = update_type, theta = theta,
                                                            thresh = thresh, weights = weights_mat[, j], penalty.factor = penalty_mat[, j],
                                                            init_select = init_select, fun = coord_fun, n = n, p = p, nlambda = nlambda, ...)},
                       mc.cores = nCores, mc.preschedule = FALSE)
@@ -157,7 +157,7 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
 }
 
 
-zigm_wrapper = function(jth, X, lambda, family, update_type, weights, penalty.factor, init_select, fun,
+zigm_wrapper = function(jth, X, lambda, family, update_type, theta, weights, penalty.factor, init_select, fun,
                         n, p, nlambda, thresh, ...)
 {
   seqP = 1:p
@@ -197,7 +197,7 @@ zigm_wrapper = function(jth, X, lambda, family, update_type, weights, penalty.fa
   } else {
     for (iter in 1:nlambda) {
       cat("lambda = ", lambda[iter], ", ", jth, "/", p, "th node learning \n", sep = "")
-      coef_res = fun(x = X[, nset, drop = FALSE], y = X[, jth], lambda = lambda[iter], weights = weights,
+      coef_res = fun(x = X[, nset, drop = FALSE], y = X[, jth], lambda = lambda[iter], init_theta = theta, weights = weights,
                      update_type = update_type, penalty.factor = penalty.factor, thresh = thresh, ...)
 
       Bmat[nset, iter] = coef_res$bvec[-1]

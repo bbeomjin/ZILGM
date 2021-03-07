@@ -180,15 +180,15 @@ pglm_p_irls = function(y, x, weights, bvec0 = NULL, eta0 = NULL, mu0 = NULL,
 }
 
 zilgm_poisson = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-                         thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, tol = 1e-6, maxit = 3e+2)
+                         thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, tol = 1e-6, maxit = 3e+2, init_theta = NULL)
 {
   update_type = match.arg(update_type)
   fun_call = match.call()
   out = list()
-  
+
   n = NROW(x)
   p = NCOL(x)
-  
+
   if ((p == 1) & (update_type == "MM")) {update_type = "onecol_MM"}
   if ((p == 1) & (update_type == "IRLS")) {update_type = "onecol_IRLS"}
 
@@ -197,7 +197,7 @@ zilgm_poisson = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "
                       onecol_irls = glm_p,
                       MM = pglm_p_mm,
                       IRLS = pglm_p_irls)
-  
+
   pos_zero = (y == 0)
   pos_nzero = !pos_zero
   z0 = z = rep(1e-6, n)
