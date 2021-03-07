@@ -26,7 +26,7 @@ wlasso_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NUL
     mu = exp(eta)
 
     obj = p_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda, penalty.factor = penalty.factor)
-
+    if (is.nan(obj) | is.infinite(obj)) {obj = obj_prev}
     if (abs((obj_prev - obj) / obj_prev) < thresh) {
       bvec = bvec
       mu = mu
@@ -89,7 +89,7 @@ irls_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
     mu = exp(eta)
 
     obj = p_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda, penalty.factor = penalty.factor)
-
+    if (is.nan(obj) | is.infinite(obj)) {obj = obj_prev}
     if (abs((obj_prev - obj) / obj_prev) < thresh) {
       bvec = bvec
       mu = mu
@@ -136,7 +136,7 @@ pglm_p_mm = function(y, x, weights, penalty.factor = NULL, bvec0 = NULL, eta0 = 
 
     obj = p_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda,
                       penalty.factor = penalty.factor)
-
+    if (is.nan(obj) | is.infinite(obj)) {obj = obj_prev}
     if (abs((obj_prev - obj) / obj_prev) < thresh) {
       bvec = bvec
       mu = mu
