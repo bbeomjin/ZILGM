@@ -235,7 +235,8 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
   } else {
     theta0 = init_theta
   }
-
+  
+  theta0 = 1e+8
   prob0 = (sum(pos_zero) - sum(dNBI(0, mu = mu0, theta = theta0, log = FALSE))) / n
   prob0 = ifelse(prob0 < 1e-10, 1e-10, ifelse(prob0 > 1, 1, prob0))
 
