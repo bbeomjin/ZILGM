@@ -27,7 +27,7 @@ wlasso_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NU
 
     obj = nb_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda,
                       penalty.factor = penalty.factor, theta = theta0)
-
+    if (is.nan(obj) | is.infinite(obj)) {obj = obj_prev}
     if (abs((obj_prev - obj) / obj_prev) < thresh) {
       bvec = bvec
       mu = mu
@@ -93,7 +93,7 @@ irls_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL
 	}
 
     obj = nb_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda, penalty.factor = penalty.factor, theta = theta0)
-
+    if (is.nan(obj) | is.infinite(obj)) {obj = obj_prev}
     if (abs((obj_prev - obj) / obj_prev) < thresh) {
       bvec = bvec
       mu = mu
@@ -140,7 +140,8 @@ pglm_nb_mm = function(y, x, weights, penalty.factor = NULL, bvec0 = NULL, eta0 =
 
     obj = nb_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda,
                       penalty.factor = penalty.factor, theta = theta0)
-
+    if (is.nan(obj) | is.infinite(obj)) {obj = obj_prev}
+	
     if (abs((obj_prev - obj) / obj_prev) < thresh) {
       bvec = bvec
       mu = mu
@@ -268,7 +269,7 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
 
       erisk = nb_objective(y = y, prob = prob, bvec = bvec, mu = mu, lambda = lambda,
                            weights = weights, penalty.factor = penalty.factor, theta = theta, posz = pos_zero)
-
+      if (is.infinite(erisk) | is.nan(erisk)) {erisk = erisk_prev}
       if ((abs((erisk_prev - erisk) / (erisk_prev + 1)) < EM_tol)) {
         bvec = bvec
         theta = theta
@@ -318,7 +319,7 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
 
       erisk = nb_objective(y = y, prob = prob, bvec = bvec, mu = mu, lambda = lambda,
                            weights = weights, penalty.factor = penalty.factor, theta = theta, posz = pos_zero)
-	  if (is.infinite(erisk) | is.nan(erisk)) {erisk = 1e+8}
+	  if (is.infinite(erisk) | is.nan(erisk)) {erisk = erisk_prev}
 	  
       if ((abs((erisk_prev - erisk) / (erisk_prev + 1)) < EM_tol)) {
         bvec = bvec
