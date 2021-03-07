@@ -76,6 +76,7 @@ irls_p = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL,
   }
 
   for (i in 1:maxit) {
+    mu0[mu0 < 1e-6] = 1e-6
     w = mu0
     z = eta0 + (y - mu0) / mu0
 
