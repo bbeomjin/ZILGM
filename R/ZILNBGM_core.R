@@ -77,14 +77,20 @@ irls_nb = function(y, x, weights, penalty.factor = NULL, eta0 = NULL, mu0 = NULL
   for (i in 1:maxit) {
     w = mu0 / (1 + mu0 / theta0)
     z = eta0 + (y - mu0) / mu0
-
-    bobj = glmnet(x = x, y = z, family = "gaussian", weights = w * weights, lambda = lambda / sum(w * weights),
-                  standardize = FALSE, alpha = 1, thresh = thresh, maxit = 10 * maxit, nlambda = 1, penalty.factor = penalty.factor)
-
-    bvec = drop(coefficients(bobj))
-    eta = drop(bvec[1] + x %*% bvec[-1])
-    eta = ifelse(eta > log(1e+4), log(1e+4), eta)
-    mu = exp(eta)
+     
+    bobj = try((glmnet(x = x, y = z, family = "gaussian", weights = w * weights, lambda = lambda / sum(w * weights),
+                  standardize = FALSE, alpha = 1, thresh = thresh, maxit = 10 * maxit, nlambda = 1, penalty.factor = penalty.factor)), silent = TRUE)
+    
+	if (inherits(bobj, "try-error")) {
+	  bvec = rep(0, ncol(x) + 1)
+	  mu = rep(1e-8, length(y))
+      eta = log(mu)
+	} else {
+	  bvec = drop(coefficients(bobj))
+      eta = drop(bvec[1] + x %*% bvec[-1])
+      eta = ifelse(eta > log(1e+4), log(1e+4), eta)
+      mu = exp(eta)
+	}
 
     obj = nb_bvec_obj(y = y, weights = weights, bvec = bvec, mu = mu, lambda = lambda, penalty.factor = penalty.factor, theta = theta0)
 
@@ -312,7 +318,7 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
 
       erisk = nb_objective(y = y, prob = prob, bvec = bvec, mu = mu, lambda = lambda,
                            weights = weights, penalty.factor = penalty.factor, theta = theta, posz = pos_zero)
-	  if (is.infinite(erisk)) {erisk = 1e+8}
+	  # if (is.infinite(erisk)) {erisk = 1e+8}
 	  
       if ((abs((erisk_prev - erisk) / (erisk_prev + 1)) < EM_tol)) {
         bvec = bvec
