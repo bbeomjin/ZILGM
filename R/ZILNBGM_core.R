@@ -312,7 +312,8 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
 
       erisk = nb_objective(y = y, prob = prob, bvec = bvec, mu = mu, lambda = lambda,
                            weights = weights, penalty.factor = penalty.factor, theta = theta, posz = pos_zero)
-
+	  if (is.infinite(erisk)) {erisk = 1e+8}
+	  
       if ((abs((erisk_prev - erisk) / (erisk_prev + 1)) < EM_tol)) {
         bvec = bvec
         theta = theta
