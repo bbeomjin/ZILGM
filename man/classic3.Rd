@@ -8,7 +8,7 @@ The classic3 dataset consists of CISI, MED, and CRAN document collections. CISI,
 }
 
 \usage{
-data(classic3}
+data(classic3)
 }
 
 \references{Choi, H., J. Gim, S. Won, Y. J. Kim, S. Kwon, and C. Park, 2017: Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}, no. 1, 1-10. \cr
