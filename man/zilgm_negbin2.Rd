@@ -9,7 +9,7 @@ Neiborhood selection under the zero-inflated negative binomial distribution II b
 \usage{
 zilgm_negbin2(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"),
               penalty.factor = NULL, thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2,
-			  tol = 1e-6, maxit = 3e+2, init_theta = NULL)
+			  tol = 1e-6, maxit = 3e+2, theta = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -79,7 +79,7 @@ simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1,
 					  family = "negbin", signal = 1, theta = 0.5, noise = 0.0)
 y = simul_dat$X[, 1]
 X = simul_dat$X[, -1]
-negbin2_fit = zilgm_negbin2(y = y, x = X, lambda = 1, update_type = "IRLS", fixed_sigma = FALSE)
+negbin2_fit = zilgm_negbin2(y = y, x = X, lambda = 1, update_type = "IRLS")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

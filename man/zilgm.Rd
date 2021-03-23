@@ -8,7 +8,7 @@ Network estimation following local markov property for count data with zero infl
 }
 \usage{
 zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), 
-      update_type = c("IRLS", "MM"), sym = c("AND", "OR"), thresh = 1e-6, 
+      update_type = c("IRLS", "MM"), sym = c("AND", "OR"), theta = NULL, thresh = 1e-6, 
 	  weights_mat = NULL, penalty_mat = NULL, do_boot = FALSE, boot_num = 10,
 	  beta = 0.05, lambda_min_ratio = 1e-4, init_select = FALSE, nCores = 1, ...)
 }
