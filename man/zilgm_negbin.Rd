@@ -9,7 +9,7 @@ Neiborhood selection under the zero-inflated negative binomial distribution I by
 \usage{
 zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), 
              penalty.factor = NULL, thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2,
- 			 tol = 1e-6, maxit = 3e+2, fixed_theta = FALSE)
+ 			 tol = 1e-6, maxit = 3e+2, init_theta = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -46,8 +46,8 @@ zilgm_negbin(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"),
   \item{maxit}{
   A integer value. Maximum number of coordinate descent iterations.
   }
-  \item{fixed_theta}{
-  A logical. Whether to estimate dispersion parameter theta.
+  \item{init_theta}{
+  A numeric value. If the argument is given value, the neiborhood selection is implemented using this dispersion value without estimating the dispersion parameter.
   }
 }
 \value{

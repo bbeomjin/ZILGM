@@ -197,7 +197,7 @@ zigm_wrapper = function(jth, X, lambda, family, update_type, theta, weights, pen
   } else {
     for (iter in 1:nlambda) {
       cat("lambda = ", lambda[iter], ", ", jth, "/", p, "th node learning \n", sep = "")
-      coef_res = fun(x = X[, nset, drop = FALSE], y = X[, jth], lambda = lambda[iter], init_theta = theta, weights = weights,
+      coef_res = fun(x = X[, nset, drop = FALSE], y = X[, jth], lambda = lambda[iter], theta = theta, weights = weights,
                      update_type = update_type, penalty.factor = penalty.factor, thresh = thresh, ...)
 
       Bmat[nset, iter] = coef_res$bvec[-1]

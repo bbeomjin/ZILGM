@@ -197,18 +197,25 @@ pglm_nb_irls = function(y, x, weights, theta0 = NULL, bvec0 = NULL, eta0 = NULL,
 
 
 zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-                        thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, tol = 1e-6, maxit = 3e+2, init_theta = NULL)
+                        thresh = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, tol = 1e-6, maxit = 3e+2, theta = NULL)
 {
   update_type = match.arg(update_type)
   fun_call = match.call()
   out = list()
-
+  
   n = NROW(x)
   p = NCOL(x)
 
   if ((p == 1) & (update_type == "MM")) {update_type = "onecol_MM"}
   if ((p == 1) & (update_type == "IRLS")) {update_type = "onecol_IRLS"}
-
+  
+  if (!is.null(theta)) {
+    fixed_theta = TRUE
+	init_theta = theta
+  } else {
+    fixed_theta = FALSE
+  }
+  
   update_fun = switch(update_type,
                       onecol_MM = wlasso_nb,
                       onecol_irls = glm_nb,
@@ -238,11 +245,11 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
   eta0 = log(mu0)
   bvec0 = c(eta0[1], rep(0, p))
 
-  if (is.null(init_theta)) {
-    theta0 = 1e+8
-  } else {
-    theta0 = init_theta
-  }
+  # if (is.null(init_theta)) {
+  #   theta0 = 1e+8
+  # } else {
+  #   theta0 = init_theta
+  # }
   
   theta0 = 1e+8
   prob0 = (sum(pos_zero) - sum(dNBI(0, mu = mu0, theta = theta0, log = FALSE))) / n
@@ -262,7 +269,7 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
       mu = sol_bvec$mu
       theta = sol_bvec$theta
 
-      if (!is.null(init_theta)) {
+      if (fixed_theta) {
         theta = init_theta
       } else {
         theta = theta_ml(y = y, mu = mu, weights = weights)
@@ -312,10 +319,10 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
       eta = sol_bvec$eta
       mu = sol_bvec$mu
 
-      if (!is.null(init_theta)) {
+      if (fixed_theta) {
         theta = init_theta
       } else {
-        theta = theta_ml(y = y, mu = mu0, weights = weights * (1 - z))
+        theta = theta_ml(y = y, mu = mu, weights = weights * (1 - z))
       }
 
       erisk = nb_objective(y = y, prob = prob, bvec = bvec, mu = mu, lambda = lambda,

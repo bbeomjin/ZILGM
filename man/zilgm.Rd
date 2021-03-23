@@ -33,6 +33,9 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"),
   Symmetrize the output graphs. If \code{sym = "AND"}, the edge between node \emph{i} and node \emph{j} is selected only when both node \emph{i} and node \emph{j} are selected as neighbors for each other. If \code{sym = "OR"}, 
   the edge is selected when either node \emph{i} or node \emph{j} is selected as the neighbor for each other.
   }
+  \item{theta}{
+  A dispersion parameter. If \code{type = "NBII"}, theta denote the dispersion parameter in the ZILNBGM-II. If the argument is given value, the ZILNBGM estimates the graphs using this dispersion parameter without estimating the dispersion parameters for each variable.
+  }
   \item{thresh}{
   Threshold value for the estimated edge coefficients.
   }
