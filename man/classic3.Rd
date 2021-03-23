@@ -11,8 +11,15 @@ The classic3 dataset consists of CISI, MED, and CRAN document collections. CISI,
 data(classic3)
 }
 
-\references{Choi, H., J. Gim, S. Won, Y. J. Kim, S. Kwon, and C. Park, 2017: Network analysis for count data with excess zeros. \emph{BMC genetics}, \bold{18}, no. 1, 1-10. \cr
-			Park, B., H. Choi, C. Park, 2021: Negative binomial graphical model with excess zeros.}
+\format{
+  A data frame with 3890 rows and 5898 variables.
+}
+
+\details{
+The raw dataset of the classic3 and classic4 dataset can be found at \url{http://www.dataminingresearch.com/index.php/2010/09/classic3-classic4-datasets}.
+}
+
+\references{Classic3 dataset, 2009: Classic3 dataset. Retrieved November 29, 2009 from World Wide Web, available at \url{http://www.dataminingresearch.com/index.php/2010/09/classic3-classic4-datasets}}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
