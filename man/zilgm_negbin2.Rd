@@ -54,7 +54,7 @@ zilgm_negbin2(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"),
 \value{
   An S3 object with the following slots
   \item{beta}{Estimated coefficients vector.}
-  \item{sigma}{Estimated dispersion parameter sigma.}
+  \item{theta}{Estimated dispersion parameter sigma.}
   \item{prob}{Estimated probability of structural zero.}
   \item{pos_zero}{Indices of zero values.}
   \item{iteration}{Iteration numbers until convergence.}
