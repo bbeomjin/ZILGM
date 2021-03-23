@@ -18,12 +18,7 @@ data(classic3)
 
 \examples{
 require(ZILGM)
-set.seed(1)
-n = 100; p = 10; prob = 2 / p;
-A = generate_network(p, prob, type = "random")
-simul_dat = zilgm_sim(A = A, n = n, p = p, zlvs = 0.1, 
-					  family = "negbin", signal = 1.5, theta = 0.5, noise = 0.0)
-find_lammax(simul_dat$X)
+data(classic3)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
