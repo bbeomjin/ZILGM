@@ -97,11 +97,11 @@ lambda_max = find_lammax(simul_dat$X)
 lambda_min = 1e-4 * lambda_max
 lambs = exp(seq(log(lambda_max), log(lambda_min), length.out = 50))
 nb2_fit = zilgm(X = simul_dat$X, lambda = lambs, family = "NBII", update_type = "IRLS", 
-                do_boot = TRUE, boot_num = 30, sym = "OR")
+                do_boot = TRUE, boot_num = 30, sym = "OR", nCores = 10)
 
 # To compute the regularization parameters automatically, use the argument nlambda
 nb2_fit = zilgm(X = simul_dat$X, nlambda = 50, family = "NBII", update_type = "IRLS",
-                do_boot = TRUE, boot_num = 30, sym = "OR")
+                do_boot = TRUE, boot_num = 30, sym = "OR", nCores = 10)
 				
 # Get estimated graph
 est_graph = nb2_fit$network[[nb2_fit$opt_index]]

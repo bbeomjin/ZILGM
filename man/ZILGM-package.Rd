@@ -32,7 +32,7 @@ Maintainer : Beomjin Park <bbbeomjin@gmail.com>
 
 \examples{
 library(devtools)
-install_github(bbeomjin/ZILGM)
+install_github("bbeomjin/ZILGM")
 library(ZILGM)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
