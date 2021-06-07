@@ -4,7 +4,7 @@ Zero-inflated Local Graphical Models
 ZILGM is an R package. ZILGM provides functions to fit the type I and II zero-inflated local negative binomial graphical models (ZILNBGM), and zero-inflated local Poisson graphical model (ZILPGM).
 It also provides a function that generates simulation data. 
 
-1. INSTALLATION
+## 1. INSTALLATION
 
 The ZILGM package does not list on CRAN repository. Therefore, the ZILGM package can not be installed through install.packages("ZILGM") in R prompt.
 Instead, the ZILGM package can be installed through our GitHub.
@@ -16,7 +16,7 @@ Please see below to install in R.
 > install_github("bbeomjin/ZILGM")
 ```
 
-2. USAGE NOTES
+## 2. USAGE NOTES
 
 (1) Access to and use of real data in the manuscript
 
@@ -51,7 +51,7 @@ Please see below to install in R.
 - find_lammax : "find_lammax"  function finds the maximum value of the regularization parameter.
 
 
-3. EXAMPLE
+## 3. EXAMPLE
 
 # Generation of simulated data under the random graph structure
 > require(ZILGM)
