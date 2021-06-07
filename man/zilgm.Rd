@@ -10,7 +10,7 @@ Network estimation following local markov property for count data with zero infl
 zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), 
       update_type = c("IRLS", "MM"), sym = c("AND", "OR"), theta = NULL, thresh = 1e-6, 
 	  weights_mat = NULL, penalty_mat = NULL, do_boot = FALSE, boot_num = 10,
-	  beta = 0.05, lambda_min_ratio = 1e-4, init_select = FALSE, nCores = 1, ...)
+	  beta = 0.05, lambda_min_ratio = 1e-4, init_select = FALSE, nCores = 1, verbose = 0, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -63,7 +63,7 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"),
   \item{nCores}{
   The number of cores to use for parallel computing.
   }
-  \item{verbose} {
+  \item{verbose}{
   An optional integer value, If \code{verbose = 1}, information of regularization parameter and learning node are printed. Default is \code{verbose = 0}.
   }
   \item{...}{
