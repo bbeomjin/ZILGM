@@ -12,8 +12,8 @@ Please install in one of the two installation methods below in R.
 
 (1) From GitHub
 ```{r}
-library(devtools)
-install_github("bbeomjin/ZILGM")
+> library(devtools)
+> install_github("bbeomjin/ZILGM")
 ```
 
 2. USAGE NOTES
@@ -21,17 +21,19 @@ install_github("bbeomjin/ZILGM")
 (1) Access to and use of real data in the manuscript
 
 - Cervical data : Cervical data can be available at the "MLSeq" package in R. The data can be loaded with the code below in R.
+```{r}
 > library(BioManager)
 > BioManager::install("MLSeq")
 > library(MLSeq)
 > data(cervical)
-
+```
 - Classic3 data : Classic3 data can be available at http://www.dataminingresearch.com/index.php/2010/09/classic3-classic4-datasets. 
 	         However, it seems that the URL cannot be accessed. Therefore, we included classic3 data in our ZILGM package.
 	         The data can be loaded with the code below in R.
+```{r}
 > library(ZILGM)
 > data(classic3)
-
+```
 
 (2) Description of R functions in ZILGM package
 
