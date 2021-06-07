@@ -71,3 +71,9 @@ Please see below to install in R.
 # Get estimated graph
 > est_graph = nb2_fit$network[[nb2_fit$opt_index]]
 ```
+## 4. SIMULATION
+
+We provide the simulation code to approximately reproduce the results of our paper.
+```{r}
+
+```
