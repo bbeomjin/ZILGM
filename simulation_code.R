@@ -15,16 +15,9 @@ prob = 2 / p
 signal = 1.5; noise = 0.0
 
 nb_p_result = list()
-nb_res_mat = nb2_res_mat = p_res_mat = lpgm_res_mat = list()
-nb_roc = nb2_roc = p_roc = lpgm_roc = vector(mode = "list", length = nrow(pars_set))
-nb_time_list = nb2_time_list = p_time_list = lpgm_time_list = vector("list", length = nrow(pars_set))
-nb_aic_list = nb2_aic_list = p_aic_list = vector("list", length = nrow(pars_set))
-nb_bic_list = nb2_bic_list = p_bic_list = vector("list", length = nrow(pars_set))
-nb_ll_list = nb2_ll_list = p_ll_list = vector("list", length = nrow(pars_set))
-nb_coef_list = nb2_coef_list = p_coef_list = vector("list", length = nrow(pars_set))
-
-i = 1
-j = 10
+nb_res_mat = nb2_res_mat = p_res_mat = list()
+nb_roc = nb2_roc = p_roc = vector(mode = "list", length = nrow(pars_set))
+nb_time_list = nb2_time_list = p_time_list = vector("list", length = nrow(pars_set))
 
 for (j in 1:nrow(pars_set)) {
   cat("start ==========", j, "================" , "\n")
@@ -57,57 +50,23 @@ for (j in 1:nrow(pars_set)) {
                              do_boot = TRUE, boot_num = 30, beta = 0.05, sym = "OR", nCores = numWorkers)
     ))[3]
     
-    # lpgm_time = system.time((
-    #   simul_lpgm_result = LPGM1(t(mdat$X), method = "LPGM", N = 30, beta = 0.05, stability = "star", lambda.path = lams,
-    #                             th = 1e-6)
-    # ))[3]
-    
     nb_net = simul_nb_result$network[[simul_nb_result$opt_index]]
-    nb_coef_net = simul_nb_result$coef_network[, , simul_nb_result$opt_index]
-    nb_coef_list[[j]][[i]] = nb_coef_net
-    # nb_ll_list[[j]][[i]] = rowMeans(simul_nb_result$loglik)[simul_nb_result$opt_index]
-    # nb_aic_list[[j]][[i]] = rowMeans(simul_nb_result$aic)[simul_nb_result$opt_index]
-    # nb_bic_list[[j]][[i]] = rowMeans(simul_nb_result$bic)[simul_nb_result$opt_index]
-    
     nb2_net = simul_nb2_result$network[[simul_nb2_result$opt_index]]
-    nb2_coef_net = simul_nb2_result$coef_network[, , simul_nb2_result$opt_index]
-    nb2_coef_list[[j]][[i]] = nb2_coef_net
-    # nb2_ll_list[[j]][[i]] = rowMeans(simul_nb2_result$loglik)[simul_nb2_result$opt_index]
-    # nb2_aic_list[[j]][[i]] = rowMeans(simul_nb2_result$aic)[simul_nb2_result$opt_index]
-    # nb2_bic_list[[j]][[i]] = rowMeans(simul_nb2_result$bic)[simul_nb2_result$opt_index]
-    
     p_net = simul_p_result$network[[simul_p_result$opt_index]]
-    p_coef_net = simul_p_result$coef_network[, , simul_p_result$opt_index]
-    p_coef_list[[j]][[i]] = p_coef_net
-    # p_ll_list[[j]][[i]] = rowMeans(simul_p_result$loglik)[simul_p_result$opt_index]
-    # p_aic_list[[j]][[i]] = rowMeans(simul_p_result$aic)[simul_p_result$opt_index]
-    # p_bic_list[[j]][[i]] = rowMeans(simul_p_result$bic)[simul_p_result$opt_index]
     
-    # lpgm_net = simul_lpgm_result$network[[simul_lpgm_result$opt.index]]
+    nb_roc[[j]][[i]] = ZILGM:::cal_adj_pfms(A, nb_net)
+    nb2_roc[[j]][[i]] = ZILGM:::cal_adj_pfms(A, nb2_net)
+    p_roc[[j]][[i]] = ZILGM:::cal_adj_pfms(A, p_net)
     
-    nb_roc[[j]][[i]] = cal_adj_pfms(A, nb_net)
-    nb2_roc[[j]][[i]] = cal_adj_pfms(A, nb2_net)
-    p_roc[[j]][[i]] = cal_adj_pfms(A, p_net)
-    # lpgm_roc[[j]][[i]] = cal_adj_pfms(A, lpgm_net)
     nb_time_list[[j]][[i]] = nb_time
     nb2_time_list[[j]][[i]] = nb2_time
     p_time_list[[j]][[i]] = p_time
-    # lpgm_time_list[[j]][[i]] = lpgm_time
   }
-  i = 1
-  
   nb_roc_dat = lapply(nb_roc[[j]], ROC_fun)
   nb2_roc_dat = lapply(nb2_roc[[j]], ROC_fun)
   p_roc_dat = lapply(p_roc[[j]], ROC_fun)
-  # lpgm_roc_dat = lapply(lpgm_roc[[j]], ROC_fun)
   
   nb_res_mat[[j]] = do.call(rbind.data.frame, nb_roc_dat)
   nb2_res_mat[[j]] = do.call(rbind.data.frame, nb2_roc_dat)
   p_res_mat[[j]] = do.call(rbind.data.frame, p_roc_dat)
-  # lpgm_res_mat[[j]] = do.call(rbind.data.frame, lpgm_roc_dat)
-  # nb_p_result[[j]] = t(data.frame(
-  #   NB = colMeans(nb_res_mat[[j]]),
-  #   NB2 = colMeans(nb2_res_mat[[j]]),
-  #   P = colMeans(p_res_mat[[j]]),
-  #   LPGM = colMeans(lpgm_res_mat[[j]])))
 }
