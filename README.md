@@ -11,8 +11,10 @@ The ZILGM package can be installed through our GitHub.
 Please install in one of the two installation methods below in R.
 
 (1) From GitHub
+```{r}
 > library(devtools)
 > install_github("bbeomjin/ZILGM")
+```
 
 2. USAGE NOTES
 
