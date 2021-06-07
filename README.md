@@ -53,6 +53,7 @@ Please see below to install in R.
 
 ## 3. EXAMPLE
 
+```{r}
 # Generation of simulated data under the random graph structure
 > require(ZILGM)
 > set.seed(1)
@@ -69,3 +70,4 @@ Please see below to install in R.
 
 # Get estimated graph
 > est_graph = nb2_fit$network[[nb2_fit$opt_index]]
+```
