@@ -1,3 +1,4 @@
+# devtools::install_github("bbeomjin/ZILGM")
 require(ZILGM)
 
 cal_adj_pfms = ZILGM:::cal_adj_pfms
@@ -19,14 +20,14 @@ nb_coef_list = nb2_coef_list = p_coef_list = vector("list", length = nrow(pars_s
 i = 1
 j = 10
 
-for (j in j:3) {
+for (j in 1:nrow(pars_set)) {
   cat("start ==========", j, "================" , "\n")
   kk = j
   n = pars_set[kk, 1]; 
   zlvs = pars_set[kk, 3];
   theta = pars_set[kk, 2]
   
-  for (i in i:100) {
+  for (i in 1:100) {
     set.seed(i)
     A = generate_network_structure2(node = p, prob = prob, NofHub = 3, type = "scale-free")
     mdat = zilgm_sim(A = A, n = n, p = p, zlvs = zlvs, signal = signal, noise = noise,
