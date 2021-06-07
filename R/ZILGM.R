@@ -6,7 +6,7 @@
 zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"),
                 sym = c("AND", "OR"), theta = NULL, thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL,
                 do_boot = FALSE, boot_num = 10, beta = 0.05, lambda_min_ratio = 1e-4,
-                init_select = FALSE, nCores = 1, ...)
+                init_select = FALSE, nCores = 1, verbose = 0, ...)
 {
 
   family = match.arg(family)
@@ -48,7 +48,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
 
     tmp_net = zigm_network(X = X, lambda = tmp_lams, family = family, update_type = update_type, sym = sym, theta = theta,
                            thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
-                           init_select = init_select, nCores = nCores, n = n, p = p, ...)
+                           init_select = init_select, nCores = nCores, n = n, p = p, verbose = verbose, ...)
 
     nOfEdge = unlist(lapply(tmp_net$hat_net, function(x) sum(x != 0)))
     s_lam = tmp_lams[which.max(nOfEdge > 1)]
@@ -83,7 +83,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
 
       boot_net = zigm_network(X = X[sub_ind, , drop = FALSE], lambda = lambda, family = family, update_type = update_type,
                               sym = sym, theta = theta, thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
-                              init_select = init_select, nCores = nCores, n = m, p = p, ...)
+                              init_select = init_select, nCores = nCores, n = m, p = p, verbose = verbose, ...)
 
       for (l in 1:nlambda) {
         boot_tmp[[l]] = boot_tmp[[l]] + boot_net$hat_net[[l]]
@@ -108,7 +108,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
 
   net = zigm_network(X = X, lambda = lambda, family = family, update_type = update_type,
                      sym = sym, theta = theta, thresh = thresh, weights_mat = weights_mat, penalty_mat = penalty_mat,
-                     init_select = init_select, nCores = nCores, n = n, p = p, ...)
+                     init_select = init_select, nCores = nCores, n = n, p = p, verbose = verbose, ...)
 
   out$network = net$hat_net
   out$coef_network = net$coef_net
@@ -120,7 +120,7 @@ zilgm = function(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "N
 
 
 zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), update_type = c("IRLS", "MM"), sym = c("AND", "OR"), theta = NULL,
-                        thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL, init_select = FALSE, nCores = 1, n, p, ...)
+                        thresh = 1e-6, weights_mat = NULL, penalty_mat = NULL, init_select = FALSE, nCores = 1, n, p, verbose = 0, ...)
 {
   family = match.arg(family)
   update_type = match.arg(update_type)
@@ -143,7 +143,7 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
 
   coef_tmp = mclapply(1:p, FUN = function(j) {zigm_wrapper(jth = j, X = X, lambda = lambda, family = family, update_type = update_type, theta = theta,
                                                            thresh = thresh, weights = weights_mat[, j], penalty.factor = penalty_mat[, j],
-                                                           init_select = init_select, fun = coord_fun, n = n, p = p, nlambda = nlambda, ...)},
+                                                           init_select = init_select, fun = coord_fun, n = n, p = p, nlambda = nlambda, verbose = verbose, ...)},
                       mc.cores = nCores, mc.preschedule = FALSE)
 
   for (j in 1:p) {
@@ -158,7 +158,7 @@ zigm_network = function(X, lambda = NULL, family = c("Poisson", "NBI", "NBII"), 
 
 
 zigm_wrapper = function(jth, X, lambda, family, update_type, theta, weights, penalty.factor, init_select, fun,
-                        n, p, nlambda, thresh, ...)
+                        n, p, nlambda, thresh, verbose = 0, ...)
 {
   seqP = 1:p
   Bmat = Matrix(0, p, nlambda, sparse = TRUE)
@@ -196,7 +196,9 @@ zigm_wrapper = function(jth, X, lambda, family, update_type, theta, weights, pen
     b0 = b0
   } else {
     for (iter in 1:nlambda) {
-      cat("lambda = ", lambda[iter], ", ", jth, "/", p, "th node learning \n", sep = "")
+      if (verbose == 1) {
+        cat("lambda = ", lambda[iter], ", ", jth, "/", p, "th node learning \n", sep = "")
+      }
       coef_res = fun(x = X[, nset, drop = FALSE], y = X[, jth], lambda = lambda[iter], theta = theta, weights = weights,
                      update_type = update_type, penalty.factor = penalty.factor, thresh = thresh, ...)
 

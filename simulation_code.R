@@ -1,3 +1,6 @@
+rm(list = ls())
+gc()
+
 # devtools::install_github("bbeomjin/ZILGM")
 require(ZILGM)
 
@@ -5,7 +8,10 @@ cal_adj_pfms = ZILGM:::cal_adj_pfms
 
 pars_set = expand.grid(n = c(50, 100, 200), theta = c(1e+8, 1, 0.5, 0.25), zlvs = c(0.1))
 
+p = 30
+numWorkers = 1
 nlam = 50
+prob = 2 / p
 signal = 1.5; noise = 0.0
 
 nb_p_result = list()
@@ -29,7 +35,7 @@ for (j in 1:nrow(pars_set)) {
   
   for (i in 1:100) {
     set.seed(i)
-    A = generate_network_structure2(node = p, prob = prob, NofHub = 3, type = "scale-free")
+    A = generate_network(node = p, prob = prob, NofHub = 3, type = "scale-free")
     mdat = zilgm_sim(A = A, n = n, p = p, zlvs = zlvs, signal = signal, noise = noise,
                      theta = theta, family = "negbin")
     
@@ -37,21 +43,18 @@ for (j in 1:nrow(pars_set)) {
     lams = exp(seq(log(lam_max), log(1e-4 * lam_max), length.out = 50))
     
     nb_time = system.time((
-      simul_nb_result = zilgm(X = mdat$X, lambda = lams, family = "NBI", thresh = 1e-6, EM_tol = 1e-4,
-                              EM_iter = 1e+2, nCores = numWorkers, update_type = "IRLS", weights_mat = NULL, do_boot = TRUE,
-                              boot_num = 30, init_select = FALSE, beta = 0.05, sym = "OR", maxit = 50)
+      simul_nb_result = zilgm(X = mdat$X, lambda = lams, family = "NBI", update_type = "IRLS", 
+                              do_boot = TRUE, boot_num = 30, beta = 0.05, sym = "OR", nCores = numWorkers)
     ))[3]
     
     nb2_time = system.time((
-      simul_nb2_result = zilgm(X = mdat$X, lambda = lams, family = "NBII", thresh = 1e-6, EM_tol = 1e-4,
-                               EM_iter = 1e+2, nCores = numWorkers, update_type = "IRLS", weights_mat = NULL, do_boot = TRUE,
-                               boot_num = 30, init_select = FALSE, beta = 0.05, sym = "OR", maxit = 50)
+      simul_nb2_result = zilgm(X = mdat$X, lambda = lams, family = "NBII", update_type = "IRLS", 
+                               do_boot = TRUE, boot_num = 30, beta = 0.05, sym = "OR", nCores = numWorkers)
     ))[3]
     
     p_time = system.time((
-      simul_p_result = zilgm(X = mdat$X, lambda = lams, family = "Poisson", thresh = 1e-6, EM_tol = 1e-4,
-                             EM_iter = 1e+2, nCores = numWorkers, update_type = "IRLS", weights_mat = NULL, do_boot = TRUE,
-                             boot_num = 30, init_select = FALSE, beta = 0.05, sym = "OR", maxit = 50)
+      simul_p_result = zilgm(X = mdat$X, lambda = lams, family = "Poisson", update_type = "IRLS",
+                             do_boot = TRUE, boot_num = 30, beta = 0.05, sym = "OR", nCores = numWorkers)
     ))[3]
     
     # lpgm_time = system.time((
