@@ -1,4 +1,3 @@
-require(network)
 
 generate_network = function(node, prob = 0.01, NofHub = 3, type = c("scale-free", "hub", "random")) {
   type = match.arg(type)
