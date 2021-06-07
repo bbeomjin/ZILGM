@@ -1,36 +1,18 @@
 # ZILGM
 Zero-inflated Local Graphical Models
 
-ZILGM
-
 ZILGM is an R package. ZILGM provides functions to fit the type I and II zero-inflated local negative binomial graphical models (ZILNBGM), and zero-inflated local Poisson graphical model (ZILPGM).
 It also provides a function that generates simulation data. 
 
 1. INSTALLATION
 
 The ZILGM package does not list on CRAN repository. Therefore, the ZILGM package can not be installed through install.packages("ZILGM") in R prompt.
-The ZILGM package can be installed through a local source file "ZILGM_0.1.0.tar.gz" which we provide in Supporting Information or our GitHub.
-The ZILGM package imports several other packages: methods, stats, parallel, Matrix, MASS, flux, glmnet, igraph, network and mpath.
-To successfully install the package, the dependencies must be installed beforehand.
+The ZILGM package can be installed through our GitHub.
 Please install in one of the two installation methods below in R.
 
-(1) From source file 
-# If dependencies are not installed,
-# please run the code below in R prompt before install ZILGM package. 
------------------------------------------------------------------------------
-> installed_list = rownames(installed.packages())
-> packages = c("Matrix", "MASS", "flux", "glmnet", "igraph", "network", "mpath")
-> not_installed = !(packages %in% installed_list)
-> if (any(not_installed)) {install.packages(packages[not_installed])}
------------------------------------------------------------------------------
-# Then run
-> install.packages("folder/path/ZILGM_0.1.1.tar.gz", type = "source", repos = NULL)
-
-(2) From GitHub
-# If you use "install_github" function in "devtools" package, the dependencies are installed automatically.
+(1) From GitHub
 > library(devtools)
 > install_github("bbeomjin/ZILGM")
-
 
 2. USAGE NOTES
 
