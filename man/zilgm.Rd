@@ -63,6 +63,9 @@ zilgm(X, lambda = NULL, nlambda = 50, family = c("Poisson", "NBI", "NBII"),
   \item{nCores}{
   The number of cores to use for parallel computing.
   }
+  \item{verbose} {
+  An optional integer value, If \code{verbose = 1}, information of regularization parameter and learning node are printed. Default is \code{verbose = 0}.
+  }
   \item{...}{
   Other arguments that can be passed to neighborhood selection function.
   }
