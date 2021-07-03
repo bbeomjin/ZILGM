@@ -1,6 +1,6 @@
 Package: ZILGM
 Type: Package
-Title: Implementations of Local Markov random fields for count data with zero-inflation and overdispersion
+Title: Implementations of local Markov random fields for count data with zero-inflation and overdispersion
 Depends: R (>= 3.5.0)
 Description: Provides functions for zero-inflated local negative binomial graphical model and poisson graphical model.
 Imports: methods, stats, parallel, Matrix, MASS, flux, glmnet, igraph, network, mpath
