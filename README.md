@@ -6,7 +6,7 @@ It also provides a function that generates simulation data.
 
 ## 1. INSTALLATION
 
-The ZILGM package does not list on CRAN repository. Therefore, the ZILGM package can not be installed through install.packages("ZILGM") in R prompt.
+The ZILGM package is not submitted to CRAN. Therefore, the ZILGM package can not be installed through install.packages("ZILGM") in R prompt.
 Instead, the ZILGM package can be installed through our GitHub.
 Please see below to install in R.
 
