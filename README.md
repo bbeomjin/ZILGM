@@ -1,13 +1,13 @@
 # ZILGM
 Zero-inflated Local Graphical Models
 
-ZILGM is an R package. ZILGM provides functions to fit the type I and II zero-inflated local negative binomial graphical models (ZILNBGM), and zero-inflated local Poisson graphical model (ZILPGM).
+```ZILGM``` is an R package. ```ZILGM``` provides functions to fit the type I and II zero-inflated local negative binomial graphical models (ZILNBGM), and zero-inflated local Poisson graphical model (ZILPGM).
 It also provides a function that generates simulation data. 
 
 ## 1. INSTALLATION
 
-The ZILGM package is not submitted to CRAN. Therefore, the ZILGM package can not be installed through install.packages("ZILGM") in R prompt.
-Instead, the ZILGM package can be installed through our GitHub.
+```ZILGM``` is not submitted to CRAN. Therefore, the ```ZILGM``` can not be installed through install.packages("ZILGM") in R prompt.
+Instead, ```ZILGM``` can be installed through our GitHub.
 Please see below to install in R.
 
 (1) From GitHub
@@ -28,27 +28,27 @@ Please see below to install in R.
 > data(cervical)
 ```
 - Classic3 data : Classic3 data can be available at http://www.dataminingresearch.com/index.php/2010/09/classic3-classic4-datasets. 
-	         However, it seems that the URL cannot be accessed. Therefore, we included classic3 data in our ZILGM package.
+	         However, it seems that the URL cannot be accessed. Therefore, we included classic3 data in ```ZILGM```.
 	         The data can be loaded with the code below in R.
 ```{r}
 > library(ZILGM)
 > data(classic3)
 ```
 
-(2) Description of R functions in ZILGM package
+(2) Description of R functions in ```ZILGM``` 
 
-- Descriptions of arguments in the functions in ZILGM can be obtained by help() or ? in R prompt, and documentation of ZILGM.   
+- Descriptions of arguments in the functions in ```ZILGM``` can be obtained by ```help()``` or ```?``` in R prompt, and documentation of ```ZILGM```.   
 
 
-(3) List of R functions in ZILGM package
+(3) List of R functions in ```ZILGM```
 
-- zilgm : "zilgm" function is used to fit the type I and II ZILNBGM model, and ZILPGM model.
+- ```zilgm``` : ```zilgm``` function is used to fit the type I and II ZILNBGM model, and ZILPGM model.
 
-- generate_network : "generate_network" function is that generates scale-free, hub and random graph strutures.
+- ```generate_network``` : ```generate_network``` function is that generates scale-free, hub and random graph strutures.
 
-- zilgm_sim : "zilgm_sim" is used to generate the zero-inflated count data with overdispersion for simulation given graph structure.
+- ```zilgm_sim``` : ```zilgm_sim``` is used to generate the zero-inflated count data with overdispersion for simulation given graph structure.
 
-- find_lammax : "find_lammax"  function finds the maximum value of the regularization parameter.
+- ```find_lammax``` : ```find_lammax```  function finds the maximum value of the regularization parameter.
 
 
 ## 3. EXAMPLE
