@@ -326,21 +326,5 @@ sigma_ml = function(y, mu, weights = NULL)
 }
 
 
-sigma_ml2 = function(y, mu, weights = NULL)
-{
-  n = length(y)
-  if (is.null(weights)) {weights = rep(1 / n, n)}
-  NB2_theta = function(sigma, mu, y, weights) {
-    ylogy = ifelse(y == 0, 0, y * log(y))
-    obj = 1 / (1 + sigma) * (y * log(mu) - ylogy + y - mu)
-    return(sum(n * weights * obj))
-  }
-  # start = c(0.01)
-  fit = optimize(NB2_theta, y = y, mu = mu, weights = weights, interval = c(1e-6, 1000), maximum = TRUE)
-  sigma = fit$maximum
-  # sigma = ifelse(sigma <= 5e-5, 0, sigma)
-  return(sigma)
-}
-
 
 

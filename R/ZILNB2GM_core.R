@@ -1,6 +1,6 @@
 
 zilgm_negbin2 = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "MM"), penalty.factor = NULL,
-                         tol = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, thresh = 1e-6, maxit = 3e+2, theta = NULL, theta_type = c("type1", "type2"))
+                         tol = 1e-6, EM_tol = 1e-5, EM_iter = 3e+2, thresh = 1e-6, maxit = 3e+2, theta = NULL)
 {
   update_type = match.arg(update_type)
   fun_call = match.call()
@@ -92,11 +92,7 @@ zilgm_negbin2 = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "
       if (fixed_theta) {
         theta = init_theta
       } else {
-        if (theta_type == "type1") {
-          theta = sigma_ml(y, mu = mu, weights = weights * (1 - z))
-        } else {
-          theta = sigma_ml2(y, mu = mu, weights = weights * (1 - z))
-        }
+        theta = sigma_ml(y, mu = mu, weights = weights * (1 - z))
       }
 
       erisk = nb2_objective(y = y, prob = prob, bvec = bvec, mu = mu, lambda = lambda,
