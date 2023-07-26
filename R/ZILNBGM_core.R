@@ -258,7 +258,7 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
   erisk_prev = 1e+150
 
   if (sum(pos_zero) == 0) {
-
+    
     for (iter in 1:EM_iter) {
 
       sol_bvec = update_fun(y = y, x = x, weights = weights, penalty.factor = penalty.factor,
@@ -275,7 +275,7 @@ zilgm_negbin = function(y, x, lambda, weights = NULL, update_type = c("IRLS", "M
         theta = theta_ml(y = y, mu = mu, weights = weights)
       }
 
-      erisk = nb_objective(y = y, prob = prob, bvec = bvec, mu = mu, lambda = lambda,
+      erisk = nb_objective(y = y, prob = prob0, bvec = bvec, mu = mu, lambda = lambda,
                            weights = weights, penalty.factor = penalty.factor, theta = theta, posz = pos_zero)
       if (is.infinite(erisk) | is.nan(erisk)) {erisk = erisk_prev}
       if ((abs((erisk_prev - erisk) / (erisk_prev + 1)) < EM_tol)) {
